@@ -1,85 +1,139 @@
 <!DOCTYPE html>
-    <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Memory Game</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="stylebase.css">
-    <link rel="stylesheet" href="gamebase.css">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="header.css">
-</head>
+		<title>Memory Game</title>
 
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		>
 
-<style>
-body{
-    background-image: url(image/background_startmemory.gif);
-}
-</style>
+		<link rel="stylesheet" href="stylebase.css">
+		<link rel="stylesheet" href="gamebase.css">
+		<link rel="icon" href="./favicon.ico" type="image/x-icon">
+		<link rel="stylesheet" href="footer.css">
+		<link rel="stylesheet" href="header.css">
+	</head>
 
 
-<body>
+	<body>
+		<section style="padding: 20px">
+			<header class="header">
+				<div class="logo-container">
+					<img src="image/logo.png" alt="Logo" class="logo">
+					<h1 class="title">Memory Game</h1>
+				</div>
+				<nav class="nav">
+					<a
+						href="index.html"
+						class="nav-link"
+						style="cursor: url('image/pointer.png') 8 8, pointer"
+						>Home</a
+					>
+					<a
+						href="login.html"
+						class="nav-link"
+						style="cursor: url('image/pointer.png') 8 8, pointer"
+						>Login</a
+					>
+					<a
+						href="register.html"
+						class="nav-link"
+						style="cursor: url('image/pointer.png') 8 8, pointer"
+						>Register</a
+					>
+				</nav>
+			</header>
+		</section>
 
-        <section style="padding: 20px;">
-        <header class="header">
-            <div class="logo-container">
-                <img src="image/logo.png" alt="Logo" class="logo">
-                <h1 class="title">Memory Game</h1>
-            </div>
-            <nav class="nav">
-                <a href="index.html" class="nav-link" style="cursor: url('image/pointer.png') 8 8, pointer;">Home</a>
-                <a href="login.html" class="nav-link" style="cursor: url('image/pointer.png') 8 8, pointer;">Login</a>
-                <a href="register.html" class="nav-link" style="cursor: url('image/pointer.png') 8 8, pointer;">Register</a>
-            </nav>
-        </header>
-      </section>
+		<section class="game-section">
+			<div class="game-container">
+				<h2 class="game-title">Bem-vindo ao Memory Game!</h2>
+				<p class="game-description">
+					Teste sua memória e divirta-se com nossos desafios!
+				</p>
 
-<section class="game-section">
-    <div class="game-container">
-        <h2 class="game-title">Bem-vindo ao Memory Game!</h2>
-        <p class="game-description">Teste sua memória e divirta-se com nossos desafios!</p>
+				<div class="game-table">
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+					<div class="game-cell"></div>
+				</div>
+				
+				<a href="leaderboard.html" class="nav-link">Leaderboard</a>
 
-        <table class="game-table">
-            <tr>
-                <td class="game-cell"><img src="image/backgroundcard.png" alt="Card" class="card-image"></td>
-                <td class="game-cell"><img src="image/backgroundcard.png" alt="Card" class="card-image"></td>
-                <td class="game-cell"><img src="image/backgroundcard.png" alt="Card" class="card-image"></td>
-            </tr>
-            <tr>
-                <td class="game-cell" ><img src="image/backgroundcard.png" alt="Card" class="card-image"></td>
-                <td class="game-cell"><img src="image/backgroundcard.png" alt="Card" class="card-image"></td>
-               <button><td class="game-cell"><img src="image/backgroundcard.png" alt="Card" class="card-image"></td></button>
-            </tr>
-        </table>
-    </div>
-</section>
+			</div>
+		</section>
 
-
-
-
-    <main>
-
-
-
-
-<footer class="site-footer">
-    <div class="footer-container">
-        <div class="footer-copyright">
-            <p>&copy; 2025 Memory Game. Todos os Direitos Reservados.</p>
-            <p>Criado com 💛 para Fãs de Pokémon</p>
-        </div>
-        <div class="footer-social-links">
-            <a href="#" title="Nosso Projeto no GitHub">GitHub</a>
-            <a href="#" title="Política de Privacidade">Privacidade</a>
-        </div>
-    </div>
-</footer>
-    </main>
-</body>
+		<main>
+			<footer class="site-footer">
+				<div class="footer-container">
+					<div class="footer-copyright">
+						<p>&copy; 2025 Memory Game. Todos os Direitos Reservados.</p>
+						<p>Criado com 💛 para Fãs de Pokémon</p>
+					</div>
+					<div class="footer-social-links">
+						<a href="#" title="Nosso Projeto no GitHub">GitHub</a>
+						<a href="#" title="Política de Privacidade">Privacidade</a>
+					</div>
+				</div>
+			</footer>
+		</main>
+	</body>
 </html>
