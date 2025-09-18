@@ -18,6 +18,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    cursor: url('image/cursor.png') 8 8, pointer;
 }
 
 .container-flex {
@@ -66,6 +67,7 @@ input[type="text"], input[type="password"] {
     font-size: 16px;
     color: #333;
     transition: all 0.3s ease;
+    cursor: url('image/pointer.png') 8 8, pointer;
 }
 
 input[type="text"]::placeholder, input[type="password"]::placeholder {
@@ -92,6 +94,7 @@ input[type="text"]:focus, input[type="password"]:focus {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(254, 180, 123, 0.4);
+    cursor: url('image/pointer.png') 8 8, pointer;
 }
 
 .Submit_Button:hover {
