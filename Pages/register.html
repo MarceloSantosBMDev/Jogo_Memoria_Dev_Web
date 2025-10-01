@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../Styles/footer.css" />
+    <link rel="stylesheet" href="../Styles/style.css" />
+    <link rel="stylesheet" href="../Styles/header.css" />
+    <link rel="icon" href="./favicon.ico" type="../image/x-icon" />
+  </head>
+
+  <body>
+    <section style="padding: 20px">
+      <header class="header">
+        <div class="logo-container">
+          <img src="../image/logo.png" alt="Logo" class="logo" />
+          <h1 class="title">Memory Game</h1>
+        </div>
+        <nav class="nav">
+          <a
+            href="../index.html"
+            class="nav-link"
+            style="cursor: url('../image/pointer.png') 8 8, pointer"
+            >Home</a
+          >
+          <a
+            href="login.html"
+            class="nav-link"
+            style="cursor: url('../image/pointer.png') 8 8, pointer"
+            >Login</a
+          >
+          <a
+            href="register.html"
+            class="nav-link"
+            style="cursor: url('../image/pointer.png') 8 8, pointer"
+            >Register</a
+          >
+        </nav>
+      </header>
+    </section>
+
+    <main>
+      <div class="container-flex">
+        <div class="center_container">
+          <img
+            src="../pokemons/umbreon.gif"
+            alt="Umbreon"
+            class="umbreon_espeon"
+          />
+
+          <form action="login">
+            <h3>Cadastro</h3>
+            <input type="text" name="Nome" placeholder="Nome" required />
+            <input type="text" name="Email" placeholder="Email" required />
+            <input type="text" name="username" placeholder="Usuário" required />
+            <input
+              type="password"
+              name="password"
+              placeholder="Senha"
+              required
+            />
+            <button
+              type="submit"
+              class="Submit_Button"
+              style="background: linear-gradient(45deg, #ff7dd2, #000000)"
+            >
+              Cadastre-se
+            </button>
+            <p class="p_login">
+              Já tem um login?
+              <a
+                href="login.html"
+                style="cursor: url('../image/pointer.png') 8 8, pointer"
+                >Logar-se</a
+              >
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <footer class="site-footer">
+        <div class="footer-container">
+          <div class="footer-copyright">
+            <p>&copy; 2025 Memory Game. Todos os Direitos Reservados.</p>
+            <p>Criado com 💛 para Fãs de Pokémon</p>
+          </div>
+          <div class="footer-social-links">
+            <a href="#" title="Nosso Projeto no GitHub">GitHub</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
