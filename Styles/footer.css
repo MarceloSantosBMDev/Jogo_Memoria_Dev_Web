@@ -135,10 +135,50 @@
   );
 }
 
+/* TEMA ROXO/VIOLETA */
+.site-footer.theme-purple {
+  background: linear-gradient(15deg, #a78bfa 0%, #8b5cf6 45%, #7c3aed 100%);
+  clip-path: polygon(5% 0, 100% 0, 100% 100%, 0 100%, 0 15%);
+}
+
+.site-footer.theme-purple::before {
+  background: linear-gradient(
+    15deg,
+    rgba(139, 92, 246, 0.9) 0%,
+    rgba(124, 58, 237, 1) 100%
+  );
+  clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+  width: 350px;
+}
+
+.site-footer.theme-purple::after {
+  background: linear-gradient(
+    165deg,
+    rgba(139, 92, 246, 0.8) 0%,
+    rgba(124, 58, 237, 1) 100%
+  );
+  clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
+  width: 280px;
+}
+
+.site-footer.theme-purple .footer-copyright p:first-child {
+  color: #c4b5fd;
+}
+
+.site-footer.theme-purple .footer-social-links a:hover {
+  background: #c4b5fd;
+  color: #1a1a1a;
+  box-shadow: 0 6px 16px rgba(167, 139, 250, 0.6);
+}
+
 @media (max-width: 768px) {
   .site-footer {
     clip-path: polygon(0 10%, 10% 0, 100% 0, 100% 100%, 0 100%);
     padding: 35px 20px;
+  }
+
+  .site-footer.theme-purple {
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 10%);
   }
 
   .site-footer .footer-container {

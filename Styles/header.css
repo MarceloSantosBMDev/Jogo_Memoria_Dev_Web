@@ -163,6 +163,35 @@ section {
   );
 }
 
+/* TEMA ROXO/VIOLETA */
+.header.theme-purple {
+  background: linear-gradient(165deg, #a78bfa 0%, #8b5cf6 45%, #7c3aed 100%);
+}
+
+.header.theme-purple::before {
+  background-image: none;
+  background: linear-gradient(
+    -15deg,
+    rgba(167, 139, 250, 0.4) 0%,
+    rgba(139, 92, 246, 0.3) 50%,
+    rgba(124, 58, 237, 0.4) 100%
+  );
+  clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+  animation: none;
+  width: 350px;
+  left: 0;
+}
+
+.header.theme-purple::after {
+  background: linear-gradient(
+    165deg,
+    rgba(139, 92, 246, 0.9) 0%,
+    rgba(124, 58, 237, 1) 100%
+  );
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+  width: 250px;
+}
+
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
