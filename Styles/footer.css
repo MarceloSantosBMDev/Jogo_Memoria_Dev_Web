@@ -1,16 +1,47 @@
+/* FOOTER DEFAULT (VERMELHO)*/
 .site-footer {
-  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSnQIuAcmrmgcF7FrK478ha6lll4kgaPoIJQ&s");
-  background: linear-gradient(
-    135deg,
-    rgba(25, 27, 41, 0.9),
-    rgba(40, 43, 64, 1)
-  );
-  color: #f0f0f0;
-  padding: 35px 20px;
+  position: relative;
+  background: linear-gradient(15deg, #e63946 0%, #dc2f3e 45%, #c41e2c 100%);
+  color: #ffffff;
+  padding: 40px 20px;
   margin-top: 50px;
   font-family: "Poppins", sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+  border-top: 4px solid #1a1a1a;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+  clip-path: polygon(0 15%, 5% 0, 100% 0, 100% 100%, 0 100%);
+  overflow: hidden;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  background: linear-gradient(
+    15deg,
+    rgba(220, 47, 62, 0.9) 0%,
+    rgba(196, 30, 44, 1) 100%
+  );
+  clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+  z-index: 0;
+}
+
+.site-footer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100%;
+  background: linear-gradient(
+    165deg,
+    rgba(220, 47, 62, 0.8) 0%,
+    rgba(196, 30, 44, 1) 100%
+  );
+  clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
+  z-index: 0;
 }
 
 .site-footer .footer-container {
@@ -20,19 +51,32 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 25px;
+  position: relative;
+  z-index: 1;
+}
+
+.site-footer .footer-copyright {
+  background: #1a1a1a;
+  padding: 15px 30px;
+  border-radius: 50px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .site-footer .footer-copyright p {
   margin: 5px 0;
   font-size: 0.9rem;
-  color: #bdc3c7;
+  color: #ffffff;
   text-align: left;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .site-footer .footer-copyright p:first-child {
-  color: #ffffff;
-  font-weight: 500;
+  color: #ffde00;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .site-footer .footer-social-links {
@@ -42,30 +86,82 @@
 }
 
 .site-footer .footer-social-links a {
-  color: #f0f0f0;
+  color: #1a1a1a;
   text-decoration: none;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease-in-out;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 50px;
+  background: #ffffff;
+  border: 3px solid #1a1a1a;
+  transition: all 0.3s ease;
   cursor: url("../image/pointer.png") 8 8, pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.95rem;
 }
 
 .site-footer .footer-social-links a:hover {
-  background-color: #ffeb3b;
-  color: #2c3e50;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(255, 235, 59, 0.3);
+  background: #ffde00;
+  color: #1a1a1a;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 222, 0, 0.5);
+  border-color: #1a1a1a;
+}
+
+.site-footer .footer-social-links a:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* TEMA AMARELO */
+.site-footer.theme-yellow {
+  background: linear-gradient(15deg, #f5a623 0%, #e89b1c 45%, #d68910 100%);
+}
+
+.site-footer.theme-yellow::before {
+  background: linear-gradient(
+    15deg,
+    rgba(232, 155, 28, 0.9) 0%,
+    rgba(214, 137, 16, 1) 100%
+  );
+}
+
+.site-footer.theme-yellow::after {
+  background: linear-gradient(
+    165deg,
+    rgba(232, 155, 28, 0.8) 0%,
+    rgba(214, 137, 16, 1) 100%
+  );
 }
 
 @media (max-width: 768px) {
+  .site-footer {
+    clip-path: polygon(0 10%, 10% 0, 100% 0, 100% 100%, 0 100%);
+    padding: 35px 20px;
+  }
+
   .site-footer .footer-container {
     flex-direction: column;
     gap: 25px;
   }
 
+  .site-footer .footer-copyright {
+    text-align: center;
+    padding: 15px 25px;
+  }
+
   .site-footer .footer-copyright p {
     text-align: center;
+  }
+
+  .site-footer .footer-social-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .site-footer .footer-social-links a {
+    padding: 10px 24px;
+    font-size: 0.9rem;
   }
 }

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <title>Memory Game</title>
+    <title>Memory Game - Pokémon Edition</title>
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
@@ -20,8 +20,8 @@
   </head>
 
   <body>
-    <section style="padding: 20px">
-      <header class="header">
+    <section>
+      <header class="header theme-yellow">
         <div class="logo-container">
           <img src="../image/logo.png" alt="Logo" class="logo" />
           <h1 class="title">Memory Game</h1>
@@ -51,84 +51,23 @@
 
     <section class="game-section">
       <div class="game-container">
-        <h2 class="game-title">Bem-vindo ao Memory Game!</h2>
-        <p class="game-description">
-          Teste sua memória e divirta-se com nossos desafios!
-        </p>
+        <h2 class="game-title"></h2>
+        <p class="game-description"></p>
 
-        <div class="game-table">
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-          <div class="game-cell"></div>
-        </div>
+        <div class="game-table"></div>
 
-        <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+        <a
+          href="leaderboard.html"
+          class="nav-link"
+          style="cursor: url('../image/pointer.png') 8 8, pointer"
+        >
+          Leaderboard
+        </a>
       </div>
     </section>
 
     <main>
-      <footer class="site-footer">
+      <footer class="site-footer theme-yellow">
         <div class="footer-container">
           <div class="footer-copyright">
             <p>&copy; 2025 Memory Game. Todos os Direitos Reservados.</p>
@@ -140,5 +79,6 @@
         </div>
       </footer>
     </main>
+    <script src="../Scripts/memorygame.js"></script>
   </body>
 </html>
