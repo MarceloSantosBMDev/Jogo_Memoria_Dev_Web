@@ -1,20 +1,22 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 html {
-  height: 100%;
-  cursor: url("../image/cursor.png") 8 8, pointer;
+	height: 100%;
+	cursor:
+		url("../image/cursor.png") 8 8,
+		pointer;
 }
 
 body {
-  height: 100%;
-  font-family: "Poppins", sans-serif;
-  background-image: url("../image/background_base.gif");
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+	height: 100%;
+	font-family: "Poppins", sans-serif;
+	background-image: url("../image/background_base.gif");
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
