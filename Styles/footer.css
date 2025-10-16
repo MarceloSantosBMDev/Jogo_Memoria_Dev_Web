@@ -167,12 +167,6 @@
 	color: #c4b5fd;
 }
 
-.site-footer.theme-purple .footer-social-links a:hover {
-	background: #c4b5fd;
-	color: #1a1a1a;
-	box-shadow: 0 6px 16px rgba(167, 139, 250, 0.6);
-}
-
 @media (max-width: 768px) {
 	.site-footer {
 		clip-path: polygon(0 10%, 10% 0, 100% 0, 100% 100%, 0 100%);
