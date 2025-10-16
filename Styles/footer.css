@@ -74,7 +74,7 @@
 }
 
 .site-footer .footer-copyright p:first-child {
-	color: #ffde00;
+	color: #ff1100;
 	font-weight: 700;
 	letter-spacing: 0.5px;
 }
@@ -135,6 +135,10 @@
 		rgba(232, 155, 28, 0.8) 0%,
 		rgba(214, 137, 16, 1) 100%
 	);
+}
+
+.site-footer.theme-yellow .footer-copyright p:first-child {
+	color: #ffd900;
 }
 
 /* TEMA ROXO/VIOLETA */

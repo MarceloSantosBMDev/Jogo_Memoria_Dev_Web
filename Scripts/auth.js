@@ -18,10 +18,9 @@
 		sessionStorage.removeItem("logged");
 		updateHeader();
 
-		window.location.href = getBasePath() + "index.html";
+		window.location.href = getBasePath() + "Pages/login.html";
 	}
 
-	// Função para obter o caminho base correto
 	function getBasePath() {
 		const path = window.location.pathname;
 		if (path.includes("/Pages/")) {
@@ -30,7 +29,7 @@
 		return "./";
 	}
 
-	// Função para atualizar o header
+	// Atualiza o Header
 	function updateHeader() {
 		const nav = document.querySelector(".nav");
 		if (!nav) return;
@@ -44,7 +43,6 @@
                 <a href="#" id="logout-btn" class="nav-link" style="cursor: url('${basePath}image/pointer.png') 8 8, pointer;">Log off</a>
             `;
 
-			// Adicionar event listener para logout
 			const logoutBtn = document.getElementById("logout-btn");
 			if (logoutBtn) {
 				logoutBtn.addEventListener("click", function (e) {

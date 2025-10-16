@@ -115,8 +115,6 @@ function criarBotoesControle() {
 		margin: 10px 0;
 		font-size: 1.2rem;
 		padding: 15px 40px;
-		background: #2196f3;
-		border-color: #1976d2;
 		display: inline-block;
 		text-decoration: none;
 	`;
