@@ -169,6 +169,11 @@ body::after {
 	grid-template-rows: repeat(4, 100px);
 }
 
+.game-table.grid-6 {
+	grid-template-columns: repeat(6, 90px);
+	grid-template-rows: repeat(6, 90px);
+}
+
 .game-table.grid-8 {
 	grid-template-columns: repeat(8, 80px);
 	grid-template-rows: repeat(8, 80px);
@@ -307,6 +312,11 @@ body::after {
 		grid-template-rows: repeat(4, 85px);
 	}
 
+	.game-table.grid-6 {
+		grid-template-columns: repeat(6, 75px);
+		grid-template-rows: repeat(6, 75px);
+	}
+
 	.game-table.grid-8 {
 		grid-template-columns: repeat(8, 65px);
 		grid-template-rows: repeat(8, 65px);
@@ -341,6 +351,11 @@ body::after {
 	.game-table.grid-4 {
 		grid-template-columns: repeat(4, 75px);
 		grid-template-rows: repeat(4, 75px);
+	}
+
+	.game-table.grid-6 {
+		grid-template-columns: repeat(6, 65px);
+		grid-template-rows: repeat(6, 65px);
 	}
 
 	.game-table.grid-8 {
@@ -382,6 +397,11 @@ body::after {
 		grid-template-rows: repeat(4, 65px);
 	}
 
+	.game-table.grid-6 {
+		grid-template-columns: repeat(6, 55px);
+		grid-template-rows: repeat(6, 55px);
+	}
+
 	.game-table.grid-8 {
 		grid-template-columns: repeat(8, 45px);
 		grid-template-rows: repeat(8, 45px);
@@ -402,6 +422,11 @@ body::after {
 }
 
 @media (max-width: 400px) {
+	.game-table.grid-6 {
+		grid-template-columns: repeat(6, 48px);
+		grid-template-rows: repeat(6, 48px);
+	}
+
 	.game-table.grid-8 {
 		grid-template-columns: repeat(8, 38px);
 		grid-template-rows: repeat(8, 38px);

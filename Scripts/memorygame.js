@@ -3,9 +3,10 @@ const modoDificuldade = parseInt(urlParams.get("modo_dificuldade")) || 0;
 const modoEscolha = parseInt(urlParams.get("modo_escolha")) || 0;
 
 const config = {
-	0: { tamanho: 2, pares: 2, tempo: 30 }, // 2x2 = 4 cartas (2 pares)
-	1: { tamanho: 4, pares: 8, tempo: 90 }, // 4x4 = 16 cartas (8 pares)
-	2: { tamanho: 8, pares: 32, tempo: 300 }, // 8x8 = 64 cartas (32 pares)
+	0: { tamanho: 2, pares: 2, tempo: 30, tempoVisualizacao: 3 }, // 2x2 = 4 cartas (2 pares)
+	1: { tamanho: 4, pares: 8, tempo: 90, tempoVisualizacao: 5 }, // 4x4 = 16 cartas (8 pares)
+	2: { tamanho: 6, pares: 18, tempo: 180, tempoVisualizacao: 8 }, // 6x6 = 36 cartas (18 pares)
+	3: { tamanho: 8, pares: 32, tempo: 300, tempoVisualizacao: 12 }, // 8x8 = 64 cartas (32 pares)
 };
 
 const configuracao = config[modoDificuldade];
@@ -71,18 +72,124 @@ function inicializarJogo() {
 	configurarInterface();
 	criarCartas();
 	renderizarTabuleiro();
+	criarBotoesControle();
+}
 
-	if (modoEscolha === 1) {
-		iniciarTimer();
+// Criar botões de controle (unificados)
+function criarBotoesControle() {
+	const containerBotoes = document.getElementById("container-botoes");
+
+	// Limpar container
+	containerBotoes.innerHTML = "";
+
+	// Criar botão principal
+	const btnPrincipal = document.createElement("button");
+	btnPrincipal.id = "btn-principal";
+	btnPrincipal.textContent = jogoIniciado ? "Reiniciar Jogo" : "Iniciar Jogo";
+	btnPrincipal.className = "nav-link";
+	btnPrincipal.style.cssText = `
+		cursor: url('../image/pointer.png') 8 8, pointer;
+		margin: 10px 0;
+		font-size: 1.2rem;
+		padding: 15px 40px;
+		background: ${jogoIniciado ? "#ff9800" : "#4caf50"};
+		border-color: ${jogoIniciado ? "#f57c00" : "#2e7d32"};
+	`;
+
+	if (!jogoIniciado) {
+		btnPrincipal.addEventListener("click", iniciarJogoComVisualizacao);
+	} else {
+		btnPrincipal.addEventListener("click", reiniciarJogo);
 	}
+
+	containerBotoes.appendChild(btnPrincipal);
+
+	// Criar botão de leaderboard (sempre visível)
+	const btnLeaderboard = document.createElement("a");
+	btnLeaderboard.id = "btn-leaderboard";
+	btnLeaderboard.href = "leaderboard.html";
+	btnLeaderboard.textContent = "Leaderboard";
+	btnLeaderboard.className = "nav-link";
+	btnLeaderboard.style.cssText = `
+		cursor: url('../image/pointer.png') 8 8, pointer;
+		margin: 10px 0;
+		font-size: 1.2rem;
+		padding: 15px 40px;
+		background: #2196f3;
+		border-color: #1976d2;
+		display: inline-block;
+		text-decoration: none;
+	`;
+
+	containerBotoes.appendChild(btnLeaderboard);
+}
+
+// Iniciar jogo com visualização das cartas
+function iniciarJogoComVisualizacao() {
+	const btnPrincipal = document.getElementById("btn-principal");
+	if (btnPrincipal) {
+		btnPrincipal.disabled = true;
+		btnPrincipal.textContent = "Memorizando...";
+		btnPrincipal.style.background = "#9e9e9e";
+	}
+
+	jogoBloqueado = true;
+
+	// Mostrar todas as cartas temporariamente
+	cartas.forEach((carta) => {
+		carta.virada = true;
+	});
+	renderizarTabuleiro();
+
+	// Contagem regressiva
+	let tempoRestanteVisualizacao = configuracao.tempoVisualizacao;
+
+	const intervaloContagem = setInterval(() => {
+		tempoRestanteVisualizacao--;
+		if (btnPrincipal) {
+			btnPrincipal.textContent = `Memorizando... ${tempoRestanteVisualizacao}s`;
+		}
+
+		if (tempoRestanteVisualizacao <= 0) {
+			clearInterval(intervaloContagem);
+
+			// Esconder todas as cartas
+			cartas.forEach((carta) => {
+				carta.virada = false;
+			});
+			renderizarTabuleiro();
+
+			// Atualizar botão para "Reiniciar Jogo"
+			if (btnPrincipal) {
+				btnPrincipal.disabled = false;
+				btnPrincipal.textContent = "Reiniciar Jogo";
+				btnPrincipal.style.background = "#ff9800";
+				btnPrincipal.style.borderColor = "#f57c00";
+				btnPrincipal.removeEventListener("click", iniciarJogoComVisualizacao);
+				btnPrincipal.addEventListener("click", reiniciarJogo);
+			}
+
+			// Liberar jogo
+			jogoBloqueado = false;
+			jogoIniciado = true;
+
+			// Iniciar timer se for modo contra o tempo
+			if (modoEscolha === 1) {
+				iniciarTimer();
+			}
+		}
+	}, 1000);
 }
 
 // Configurar interface baseada no modo
 function configurarInterface() {
 	const modoTexto = modoEscolha === 0 ? "Clássico" : "Contra o Tempo";
-	const dificuldadeTexto = ["Fácil (2x2)", "Médio (4x4)", "Difícil (8x8)"][
-		modoDificuldade
-	];
+	const dificuldadeTexto = [
+		"Iniciante (2x2)",
+		"Fácil (4x4)",
+		"Médio (6x6)",
+		"Difícil (8x8)",
+	][modoDificuldade];
 
 	gameTitle.textContent = `Memory Game - ${modoTexto}`;
 
@@ -157,10 +264,7 @@ function renderizarTabuleiro() {
 }
 
 function virarCarta(index) {
-	if (!jogoIniciado) {
-		jogoIniciado = true;
-	}
-
+	if (!jogoIniciado) return;
 	if (jogoBloqueado) return;
 
 	const carta = cartas[index];
@@ -216,7 +320,10 @@ function verificarPar() {
 function iniciarTimer() {
 	timerInterval = setInterval(() => {
 		tempoRestante--;
-		document.getElementById("timer").textContent = formatarTempo(tempoRestante);
+		const timerElement = document.getElementById("timer");
+		if (timerElement) {
+			timerElement.textContent = formatarTempo(tempoRestante);
+		}
 
 		if (tempoRestante <= 0) {
 			derrota();
@@ -251,13 +358,6 @@ function vitoria() {
 
 	setTimeout(() => {
 		alert(mensagem);
-
-		// Perguntar se quer jogar novamente
-		if (confirm("Deseja jogar novamente?")) {
-			reiniciarJogo();
-		} else {
-			window.location.href = "leaderboard.html";
-		}
 	}, 500);
 }
 
@@ -268,12 +368,6 @@ function derrota() {
 
 	setTimeout(() => {
 		alert("⏰ Tempo esgotado! Você perdeu! ⏰");
-
-		if (confirm("Deseja tentar novamente?")) {
-			reiniciarJogo();
-		} else {
-			window.location.href = "../index.html";
-		}
 	}, 500);
 }
 
@@ -295,25 +389,7 @@ function reiniciarJogo() {
 	inicializarJogo();
 }
 
-// Adicionar botão de reiniciar
-function adicionarBotaoReiniciar() {
-	const gameContainer = document.querySelector(".game-container");
-	const btnReiniciar = document.createElement("button");
-	btnReiniciar.textContent = "Reiniciar Jogo";
-	btnReiniciar.className = "nav-link";
-	btnReiniciar.style.cursor = "url('../image/pointer.png') 8 8, pointer";
-	btnReiniciar.style.marginTop = "10px";
-	btnReiniciar.addEventListener("click", reiniciarJogo);
-
-	// Inserir antes do link do leaderboard
-	const leaderboardLink = gameContainer.querySelector(
-		'a[href="leaderboard.html"]',
-	);
-	gameContainer.insertBefore(btnReiniciar, leaderboardLink);
-}
-
 // Iniciar quando a página carregar
 window.addEventListener("DOMContentLoaded", () => {
 	inicializarJogo();
-	adicionarBotaoReiniciar();
 });

@@ -14,6 +14,13 @@ const leaderboardData = {
 			{ username: "Mewtwo", moves: 55 },
 			{ username: "TeamRocket", moves: 60 },
 		],
+		"6x6": [
+			{ username: "MistyWater", moves: 95 },
+			{ username: "BrockRock", moves: 102 },
+			{ username: "AshKetchum", moves: 110 },
+			{ username: "GaryOak", moves: 125 },
+			{ username: "Pikachu", moves: 135 },
+		],
 		"8x8": [
 			{ username: "AshKetchum", moves: 180 },
 			{ username: "MistyWater", moves: 195 },
@@ -36,6 +43,13 @@ const leaderboardData = {
 			{ username: "Mewtwo", time: 110 },
 			{ username: "TeamRocket", time: 125 },
 			{ username: "AshKetchum", time: 135 },
+		],
+		"6x6": [
+			{ username: "BrockRock", time: 165 },
+			{ username: "MistyWater", time: 172 },
+			{ username: "GaryOak", time: 178 },
+			{ username: "AshKetchum", time: 180 },
+			{ username: "Pikachu", time: 195 },
 		],
 		"8x8": [
 			{ username: "MistyWater", time: 420 },
