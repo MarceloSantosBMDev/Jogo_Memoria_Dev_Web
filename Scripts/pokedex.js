@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (PassoAtual === "EscolherModo") {
 			TituloTela.textContent = "Escolha o Modo";
 			const ModoAtual = modo_de_jogo[ModoEscolhido];
+
 			opcaoTela.innerHTML = `<p class="selectable-option">&lt; ${ModoAtual.name} &gt;</p>`;
 			dicaTela.textContent =
 				"Pressione SELECT para confirmar ou use as setas para mudar";
@@ -40,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		} else if (PassoAtual === "EscolherDificuldade") {
 			TituloTela.textContent = "Escolha a Dificuldade";
 			const dificuldadeAtual = dificuldades[dificuldade_escolhida];
+
 			opcaoTela.innerHTML = `<p class="selectable-option">&lt; ${dificuldadeAtual.name} &gt;</p>`;
 			dicaTela.textContent = `Tamanho do Jogo: ${dificuldadeAtual.size}`;
 			botaoSelect.classList.remove("disabled");
@@ -47,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		} else if (PassoAtual === "ConfirmarJogo") {
 			const modo = modo_de_jogo[ModoEscolhido];
 			const dificuldade = dificuldades[dificuldade_escolhida];
+
 			TituloTela.textContent = "Tudo Pronto?";
 			opcaoTela.innerHTML = `
 				<div class="summary-screen">
@@ -67,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (PassoAtual === "EscolherModo") {
 				if (direcao === "right")
 					ModoEscolhido = (ModoEscolhido + 1) % modo_de_jogo.length;
+
 				if (direcao === "left")
 					ModoEscolhido =
 						(ModoEscolhido - 1 + modo_de_jogo.length) % modo_de_jogo.length;
@@ -74,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				if (direcao === "right")
 					dificuldade_escolhida =
 						(dificuldade_escolhida + 1) % dificuldades.length;
+
 				if (direcao === "left")
 					dificuldade_escolhida =
 						(dificuldade_escolhida - 1 + dificuldades.length) %
@@ -103,7 +108,43 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (PassoAtual === "ConfirmarJogo") {
 			const dificuldadeInfo = dificuldades[dificuldade_escolhida];
 			const urlDestino = `${dificuldadeInfo.gamePage}?modo_dificuldade=${dificuldade_escolhida}&modo_escolha=${ModoEscolhido}`;
-			window.location.href = urlDestino;
+
+			const superior = document.querySelector(".pokeball-superior");
+			const inferior = document.querySelector(".pokeball-inferior");
+			const centro = document.querySelector(".pokeball-centro");
+			const botao = document.querySelector(".pokeball-botao");
+
+			let classePokebola = "";
+
+			switch (dificuldade_escolhida) {
+				case 0:
+					classePokebola = "pokeball";
+					break;
+				case 1:
+					classePokebola = "greatball";
+					break;
+				case 2:
+					classePokebola = "ultraball";
+					break;
+				case 3:
+					classePokebola = "masterball";
+					break;
+				default:
+					return;
+			}
+
+			if (classePokebola) {
+				superior.classList.add(classePokebola);
+				inferior.classList.add(classePokebola);
+				centro.classList.add(classePokebola);
+				botao.classList.add(classePokebola);
+			}
+
+			if (window.pageTransition) {
+				window.pageTransition.navigateTo(urlDestino);
+			} else {
+				window.location.href = urlDestino;
+			}
 		}
 	});
 
