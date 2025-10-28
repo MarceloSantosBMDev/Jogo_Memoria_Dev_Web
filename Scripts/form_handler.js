@@ -142,7 +142,13 @@
 
     form.querySelectorAll("[required]").forEach((field) => {
       const validator = validators[field.name];
+
+      if (!validator && field.name in validators) {
+         const key = Object.keys(validators).find(k => k.toLowerCase() === field.name.toLowerCase());
+         if(key) validator = validators[key];
+      }
       if (!validator) return;
+
 
       const error = validator(field.value.trim());
       if (error) {
@@ -180,6 +186,7 @@
   };
 
   function applyMask(input) {
+    // Aplicar máscara
     const mask = masks[input.name];
     if (mask) {
       input.addEventListener("input", (e) => {
@@ -188,6 +195,7 @@
     }
   }
 
+  // Validação via PHP
   document.addEventListener("DOMContentLoaded", function () {
     const forms = [
       document.getElementById("loginForm"),
@@ -197,13 +205,11 @@
     forms.forEach((form) => {
       form.setAttribute("novalidate", true);
 
-      // Aplica máscaras e limpa erros ao digitar
       form.querySelectorAll("input[required]").forEach((input) => {
         applyMask(input);
         input.addEventListener("input", () => clearError(input));
       });
 
-      // Handler de submit
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         document.activeElement?.blur();
@@ -213,10 +219,54 @@
           return;
         }
 
-        if (window.authSystem) {
-          window.authSystem.login();
-          window.location.href = "../index.html";
-        }
+        const formData = new FormData(form);
+        const actionUrl = form.id === 'loginForm' ? '../api/user_login.php' : '../api/user_register.php';
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = true;
+
+        fetch(actionUrl, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+             if (submitButton) submitButton.disabled = false;
+             if (!response.ok) {
+
+                 throw new Error(`Erro de rede: ${response.status} ${response.statusText}`);
+             }
+             return response.json();
+        })
+        .then(data => {
+            clearAllErrors(form);
+
+            if (data.success) {
+                alert(data.message);
+
+                if (form.id === 'registerForm') {
+                    window.location.href = 'login.html';
+                } else if (form.id === 'loginForm') {
+
+                  window.location.href = '../index.html'; 
+                }
+            } else if (data.errors) {
+
+              for (const fieldName in data.errors) {
+                    const field = form.querySelector(`[name="${fieldName}"]`);
+                    if (field) {
+                        showError(field, data.errors[fieldName]);
+                    }
+                }
+                focusFirstError(form);
+            } else {
+                alert(data.message || "Ocorreu um erro desconhecido.");
+            }
+        })
+        .catch(error => {
+            if (submitButton) submitButton.disabled = false;
+            console.error('Erro na requisição:', error);
+            alert("Não foi possível conectar ao servidor ou houve um erro: " + error.message);
+        });
       });
     });
   });
