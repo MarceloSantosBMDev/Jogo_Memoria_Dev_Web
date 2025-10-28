@@ -1,14 +1,15 @@
 <?php
 include('../PHP/connection.php');
+
 header('Content-Type: application/json');
 
-$username = trim($_POST['username'] ?? '');
-$password = $_POST['password'] ?? '';
-$full_name = trim($_POST['Nome'] ?? '');
-$email = trim($_POST['Email'] ?? '');
-$cpf = trim($_POST['CPF'] ?? '');
-$birth_date_raw = trim($_POST['data'] ?? ''); // DD/MM/AAAA
-$phone = trim($_POST['Telefone'] ?? '');
+$username = trim($conn->real_escape_string($_POST['username'] ?? ''));
+$password = ($conn->real_escape_string($_POST['password'] ?? ''));
+$full_name = trim($conn->real_escape_string($_POST['Nome'] ?? ''));
+$email = trim($conn->real_escape_string($_POST['Email'] ?? ''));
+$cpf = trim($conn->real_escape_string($_POST['CPF'] ?? ''));
+$birth_date_raw = trim($conn->real_escape_string($_POST['data'] ?? '')); // DD/MM/AAAA
+$phone = trim($conn->real_escape_string($_POST['Telefone'] ?? ''));
 
 $cpf_clean = preg_replace('/[^0-9]/', '', $cpf);
 $phone_clean = preg_replace('/[^0-9]/', '', $phone);
@@ -18,6 +19,7 @@ $birth_date = DateTime::createFromFormat('d/m/Y', $birth_date_raw)->format('Y-m-
 if (empty($username) || empty($password) || empty($email) || empty($cpf_clean) || empty($birth_date) || empty($phone_clean)) {
     $response['message'] = 'Todos os campos obrigatórios devem ser preenchidos.';
 } else {
+
 
     $stmt = $conn->prepare("SELECT username, email, cpf, phone FROM users WHERE username = ? OR email = ? OR cpf = ? OR phone = ?");
 

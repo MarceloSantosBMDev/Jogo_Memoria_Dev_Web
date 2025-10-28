@@ -4,8 +4,8 @@ include('../PHP/connection.php');
 session_start();
 header('Content-Type: application/json');
 
-$username = trim($_POST['username'] ?? '');
-$password = $_POST['password'] ?? '';
+$username = trim($conn->real_escape_string($_POST['username'] ?? ''));
+$password = $conn->real_escape_string($_POST['password'] ?? '');
 
 if (empty($username) || empty($password)) {
     $response['message'] = 'Usuário ou senha inválidos.';
@@ -28,6 +28,7 @@ if ($result->num_rows === 1) {
         // Cria session
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
+        $_SESSION['loggedin'] = true;
         
         $response['success'] = true;
         $response['message'] = "Login bem-sucedido. Redirecionando...";

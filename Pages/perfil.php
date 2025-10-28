@@ -1,3 +1,11 @@
+<?php
+$path_prefix = '../';
+$header_theme_class = 'theme-purple';
+
+require_once('../PHP/config.php');
+require_once('../PHP/protect.php'); 
+?>
+
 <!doctype html>
 <html lang="pt-br">
 	<head>
@@ -19,46 +27,9 @@
 	</head>
 
 	<body>
-		<section>
-			<header class="header theme-purple">
-				<div class="logo-container">
-					<img src="../image/logo.png" alt="Logo" class="logo">
-					<h1 class="title">Memory Game</h1>
-				</div>
-				<nav class="nav">
-					<a
-						href="../index.html"
-						class="nav-link"
-						style="
-							cursor:
-								url(&quot;../image/pointer.png&quot;) 8 8,
-								pointer;
-						"
-						>Home</a
-					>
-					<a
-						href="login.html"
-						class="nav-link"
-						style="
-							cursor:
-								url(&quot;../image/pointer.png&quot;) 8 8,
-								pointer;
-						"
-						>Login</a
-					>
-					<a
-						href="register.html"
-						class="nav-link"
-						style="
-							cursor:
-								url(&quot;../image/pointer.png&quot;) 8 8,
-								pointer;
-						"
-						>Register</a
-					>
-				</nav>
-			</header>
-		</section>
+		<?php 
+            include '../PHP/header.php'; 
+        ?>
 
 		<main>
 			<section class="profile-page-section">
@@ -167,7 +138,6 @@
 			</footer>
 		</main>
 
-		<script src="../Scripts/auth.js"></script>
 		<script src="../Scripts/profilephoto.js"></script>
 	</body>
 </html>
