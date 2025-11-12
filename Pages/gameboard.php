@@ -25,6 +25,8 @@ require_once('../PHP/protect.php');
 		<link rel="stylesheet" href="../Styles/footer.css">
 		<link rel="stylesheet" href="../Styles/header.css">
 		<link rel="stylesheet" href="../Styles/transition.css">
+		<link rel="stylesheet" href="../Styles/popup.css">
+
 	</head>
 
 	<body>
@@ -61,6 +63,9 @@ require_once('../PHP/protect.php');
 					</div>
 					<div class="footer-social-links">
 						<a href="#" title="Nosso Projeto no GitHub">GitHub</a>
+						<button id="cheat-button" class="cheat-button nav-link">
+                            Trapaça
+                        </button>
 					</div>
 				</div>
 			</footer>

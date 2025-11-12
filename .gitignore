@@ -1,3 +1,6 @@
 .prettierrc
-.git/
-.vscode/
+package-lock.json
+package.json
+git/
+vscode/
+node_modules/
