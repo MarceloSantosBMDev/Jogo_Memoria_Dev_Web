@@ -4,6 +4,7 @@ $header_theme_class = 'theme-purple';
 
 require_once('../PHP/config.php');
 require_once('../PHP/protect.php');
+require_once('../PHP/connection.php');
 ?>
 
 <!doctype html>
@@ -48,20 +49,22 @@ require_once('../PHP/protect.php');
 							</div>
 
 							<div class="size-selector">
-								<button class="size-btn" data-size="2x2">2x2</button>
-								<button class="size-btn" data-size="4x4">4x4</button>
-								<button class="size-btn" data-size="6x6">6x6</button>
-								<button class="size-btn active" data-size="8x8">8x8</button>
+								<button class="size-btn" data-size="2x2">Iniciais</button>
+								<button class="size-btn" data-size="4x4">Raros</button>
+								<button class="size-btn" data-size="6x6">Lendários</button>
+								<button class="size-btn active" data-size="8x8">Míticos</button>
 							</div>
 						</div>
 
 						<div class="leaderboard-header">
-							<span>Place</span>
+							<span>Posição</span>
 							<span>Jogador</span>
 							<span id="metric-header">Movimentos</span>
 						</div>
 
-						<div class="leaderboard-list" id="leaderboard-list"></div>
+						<div class="leaderboard-list" id="leaderboard-list">
+							<div class="loading">Carregando rankings...</div>
+						</div>
 					</div>
 				</div>
 			</section>

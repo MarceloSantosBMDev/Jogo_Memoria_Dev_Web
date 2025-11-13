@@ -7,11 +7,7 @@
       success: "linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)",
       error: "linear-gradient(135deg, #e53935 0%, #b71c1c 100%)",
       warning: "linear-gradient(135deg, #ffb300 0%, #ff9800 100%)",
-      info: "linear-gradient(135deg, #2196f3 0%, #1565c0 100%)",
-      // Mantém compatibilidade com nomes antigos
-      win: "linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)",
-      lose: "linear-gradient(135deg, #e53935 0%, #b71c1c 100%)",
-      cheat: "linear-gradient(135deg, #ffb300 0%, #ff9800 100%)",
+      info: "linear-gradient(135deg, #2196f3 0%, #1565c0 100%)"
     };
 
     const overlay = document.createElement("div");

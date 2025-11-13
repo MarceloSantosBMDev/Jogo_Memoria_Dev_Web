@@ -91,13 +91,32 @@ const gameTable = document.querySelector(".game-table");
 const gameTitle = document.querySelector(".game-title");
 const gameDescription = document.querySelector(".game-description");
 
-// Exibir popup
 function exibirPopup(titulo, mensagem, tipo) {
+    // Define as cores do header baseado no tipo
+    const headerColors = {
+      win: "linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)",
+      lose: "linear-gradient(135deg, #e53935 0%, #b71c1c 100%)",
+      cheat: "linear-gradient(135deg, #ffb300 0%, #ff9800 100%)"
+    };
+
     const overlay = document.createElement("div");
     overlay.className = "popup-overlay";
 
     const popup = document.createElement("div");
     popup.className = `popup-container ${tipo}`;
+
+    // Aplica a cor do header dinamicamente
+    const headerColor = headerColors[tipo] || headerColors.info;
+    popup.style.setProperty("--header-color", headerColor);
+
+    // Cria o elemento ::before dinamicamente usando um style inline
+    const style = document.createElement("style");
+    style.textContent = `
+      .popup-container.${tipo}::before {
+        background: ${headerColor};
+      }
+    `;
+    document.head.appendChild(style);
 
     const titleEl = document.createElement("h3");
     titleEl.className = "popup-title";
@@ -110,14 +129,17 @@ function exibirPopup(titulo, mensagem, tipo) {
     const closeBtn = document.createElement("button");
     closeBtn.className = "popup-button";
     closeBtn.textContent = "Fechar";
-    closeBtn.onclick = () => overlay.remove();
+    closeBtn.onclick = () => {
+      overlay.remove();
+      style.remove(); // Remove o style quando fechar
+    };
 
     popup.appendChild(titleEl);
     popup.appendChild(messageEl);
     popup.appendChild(closeBtn);
     overlay.appendChild(popup);
     document.body.appendChild(overlay);
-}
+  }
 
 // Inicializar o jogo
 function inicializarJogo() {
@@ -408,47 +430,171 @@ function formatarTempo(segundos) {
         .toString()
         .padStart(2, "0")}`;
 }
-
-// Vitória
-function vitoria() {
-    if (timerInterval) {
-        clearInterval(timerInterval);
+async function salvarResultadoNoBanco(dadosJogo) {
+  try {
+    const user_id = typeof currentUserId !== 'undefined' ? currentUserId : null;
+    
+    if (!user_id) {
+      throw new Error('ID do usuário não disponível');
     }
 
-    jogoBloqueado = true;
+    const dadosComUser = {
+      ...dadosJogo,
+      user_id: user_id
+    };
 
-    let mensagem = "🎉 Parabéns! Você venceu! 🎉\n\n";
+    console.log('Enviando dados para servidor:', dadosComUser);
+    
+    const response = await fetch('../PHP/save_game.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dadosComUser)
+    });
 
-    if (modoEscolha === 0) {
-        mensagem += `Jogadas: ${jogadas}`;
+    console.log('Resposta recebida, status:', response.status);
+    
+    const textoResposta = await response.text();
+    console.log('Resposta bruta:', textoResposta);
+    
+    let resultado;
+    resultado = JSON.parse(textoResposta);
+
+
+    console.log('Resposta do servidor:', resultado);
+
+    if (resultado.status === 'success') {
+      console.log('Jogo salvo com sucesso! ID:', resultado.insert_id);
+      return true;
     } else {
-        const tempoGasto = configuracao.tempo - tempoRestante;
-        mensagem += `Tempo: ${formatarTempo(tempoGasto)}`;
+      console.error('Falha ao salvar o jogo:', resultado.message);
+      alert('Erro ao salvar resultado: ' + resultado.message);
+      return false;
     }
+  } catch (error) {
+    console.error('Erro completo ao tentar salvar:', error);
+    alert('Erro: ' + error.message);
+    return false;
+  }
+}
+
+
+async function vitoria() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  jogoBloqueado = true;
+
+  let mensagem = "🎉 Parabéns! Você venceu! 🎉\n\n";
+  let moves = null;
+  let time = null;
+
+  const gameMode = modoEscolha === 0 ? 'classico' : 'tempo';
+  const difficulty = ['2x2', '4x4', '6x6', '8x8'][modoDificuldade];
+
+  if (modoEscolha === 0) {
+    moves = jogadas;
+    mensagem += `Jogadas: ${jogadas}`;
+  } else {
+    const tempoGasto = configuracao.tempo - tempoRestante;
+    time = tempoGasto;
+    mensagem += `Tempo: ${formatarTempo(tempoGasto)}`;
+  }
+
+  const dadosParaSalvar = {
+    game_mode: gameMode,
+    difficulty: difficulty,
+    moves: moves,
+    time_seconds: time,
+    completed: true
+  };
+
+  const salvou = await salvarResultadoNoBanco(dadosParaSalvar);
+  
+  if (salvou) {
+    setTimeout(() => {
+      alert(mensagem);
+    }, 500);
+  } else {
+    setTimeout(() => {
+      alert(mensagem + "\n\n(Resultado não foi salvo)");
+    }, 500);
+  }
+}
+// Vitória
+async function vitoria() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  jogoBloqueado = true;
+
+  let mensagem = "🎉 Parabéns! Você venceu! 🎉\n\n";
+  let moves = null;
+  let time = null;
+
+  const gameMode = modoEscolha === 0 ? 'classico' : 'tempo';
+  const difficulty = ['2x2', '4x4', '6x6', '8x8'][modoDificuldade];
+
+  if (modoEscolha === 0) {
+    moves = jogadas;
+    mensagem += `Jogadas: ${jogadas}`;
+  } else {
+    const tempoGasto = configuracao.tempo - tempoRestante;
+    time = tempoGasto;
+    mensagem += `Tempo: ${formatarTempo(tempoGasto)}`;
+  }
+
+  const dadosParaSalvar = {
+    game_mode: gameMode,
+    difficulty: difficulty,
+    moves: moves,
+    time_seconds: time,
+    completed: true
+  };
+
+    salvarResultadoNoBanco(dadosParaSalvar);
 
     setTimeout(() => {
-        exibirPopup(
+    exibirPopup(
             "Vitória!",
             modoEscolha === 0
                 ? `Você venceu o modo clássico com <b>${jogadas}</b> jogadas!`
                 : `Você venceu o modo contra o tempo em <b>${formatarTempo(configuracao.tempo - tempoRestante)}</b>!`,
-            "win",
+            "win"
         );
     }, 500);
+
 }
 
-// Derrota (apenas no modo contra o tempo)
-function derrota() {
-    clearInterval(timerInterval);
-    jogoBloqueado = true;
 
-    setTimeout(() => {
-        exibirPopup(
+function derrota() {
+  clearInterval(timerInterval);
+  jogoBloqueado = true;
+
+  const gameMode = 'tempo'; 
+  const difficulty = ['2x2', '4x4', '6x6', '8x8'][modoDificuldade];
+  const tempoGasto = configuracao.tempo; 
+
+  const dadosParaSalvar = {
+    game_mode: gameMode,
+    difficulty: difficulty,
+    moves: null, 
+    time_seconds: tempoGasto,
+    completed: false 
+  };
+
+  salvarResultadoNoBanco(dadosParaSalvar);
+
+  setTimeout(() => {
+    exibirPopup(
             "Derrota!",
             "O tempo acabou! Tente novamente e melhore sua memória.",
             "lose",
         );
-    }, 500);
+  }, 500);
 }
 
 // Reiniciar jogo
@@ -523,16 +669,21 @@ function alternarVisualizacaoTrapaca() {
 
 function reiniciarTrapaca() {
     const cheatButton = document.getElementById("cheat-button");
+    if (cheatVisualizacaoAtiva) {
+        cheatVisualizacaoAtiva = false;
+        renderizarTabuleiro();
+    }
 
     cheat_mode = 0;
     contador_trapaca = 0;
 
-    cheatButton.disabled = true;
-    cheatButton.onclick = pressionarBotao;
-
-    cheatButton.textContent = "Trapaça";
-    cheatButton.style.background = "#9e9e9e";
-    cheatButton.style.borderColor = "#777777ff";
+    if (cheatButton) {
+        cheatButton.disabled = true;
+        cheatButton.onclick = pressionarBotao;
+        cheatButton.textContent = "Trapaça";
+        cheatButton.style.background = "#9e9e9e";
+        cheatButton.style.borderColor = "#777777ff";
+    }
 }
 
 // Iniciar quando a página carregar

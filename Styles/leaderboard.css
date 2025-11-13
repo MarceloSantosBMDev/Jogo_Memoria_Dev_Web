@@ -347,6 +347,14 @@ body::after {
 	font-weight: 600;
 }
 
+.loading {
+	text-align: center;
+	padding: 40px 20px;
+	color: var(--light-text);
+	font-size: 1.1rem;
+	font-weight: 600;
+}
+
 @media (max-width: 768px) {
 	.leaderboard-title {
 		font-size: 1.6rem;

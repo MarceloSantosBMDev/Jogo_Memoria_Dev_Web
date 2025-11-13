@@ -5,7 +5,24 @@ $header_theme_class = 'theme-yellow';
 require_once('../PHP/config.php');
 require_once('../PHP/protect.php'); 
 ?>
+<?php
+// gameboard.php - NO INÍCIO DO ARQUIVO
+$path_prefix = '../';
+require_once('../PHP/config.php');
+require_once('../PHP/protect.php');      
+require_once('../PHP/connection.php'); 
 
+// Verificar se usuário está logado
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../login.php');
+    exit;
+}
+
+$user_id = intval($_SESSION['user_id']);
+
+// Definir variável global para JavaScript
+echo "<script>const currentUserId = " . json_encode($user_id) . ";</script>";
+?>
 <!doctype html>
 <html lang="pt-br">
 	<head>
