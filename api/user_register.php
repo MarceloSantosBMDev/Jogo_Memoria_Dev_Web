@@ -1,28 +1,35 @@
 <?php
-include('../PHP/connection.php');
 
+include('../PHP/connection.php');
 header('Content-Type: application/json');
+
+$response = ['success' => false, 'message' => '', 'errors' => []];
+$errors = [];
 
 $username = trim($conn->real_escape_string($_POST['username'] ?? ''));
 $password = ($conn->real_escape_string($_POST['password'] ?? ''));
 $full_name = trim($conn->real_escape_string($_POST['Nome'] ?? ''));
 $email = trim($conn->real_escape_string($_POST['Email'] ?? ''));
 $cpf = trim($conn->real_escape_string($_POST['CPF'] ?? ''));
-$birth_date_raw = trim($conn->real_escape_string($_POST['data'] ?? '')); // DD/MM/AAAA
+$birth_date_raw = trim($conn->real_escape_string($_POST['data'] ?? ''));
 $phone = trim($conn->real_escape_string($_POST['Telefone'] ?? ''));
 
 $cpf_clean = preg_replace('/[^0-9]/', '', $cpf);
 $phone_clean = preg_replace('/[^0-9]/', '', $phone);
-$birth_date = DateTime::createFromFormat('d/m/Y', $birth_date_raw)->format('Y-m-d');
+$birth_date = null;
+
+if (!empty($birth_date_raw)) {
+    $date_obj = DateTime::createFromFormat('d/m/Y', $birth_date_raw);
+    if ($date_obj) {
+        $birth_date = $date_obj->format('Y-m-d');
+    }
+}
 
 
 if (empty($username) || empty($password) || empty($email) || empty($cpf_clean) || empty($birth_date) || empty($phone_clean)) {
     $response['message'] = 'Todos os campos obrigatórios devem ser preenchidos.';
 } else {
-
-
     $stmt = $conn->prepare("SELECT username, email, cpf, phone FROM users WHERE username = ? OR email = ? OR cpf = ? OR phone = ?");
-
     $stmt->bind_param("ssss", $username, $email, $cpf_clean, $phone_clean);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -53,10 +60,8 @@ if (!empty($errors)) {
     sendResponse($response);
 }
 
-// INSERT
-if (empty($errors)) {
+if (empty($errors) && $response['message'] === '') {
 
-    // Hash da senha
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     
     $sql = "INSERT INTO users (username, password, full_name, email, cpf, birth_date, phone) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -65,13 +70,14 @@ if (empty($errors)) {
     
     if ($stmt->execute()) {
         $response['success'] = true;
-        $response['message'] = "Cadastro realizado com sucesso! Você será redirecionado para o login.";
+        $response['message'] = "Cadastro realizado! Você será redirecionado para o login.";
     } else {
-        // Erro
         $response['message'] = "Erro ao registrar usuário: " . $stmt->error;
     }
     
     $stmt->close();
+} else if (empty($errors)) {
+    // $response['message'] já foi definida como 'Todos os campos...'
 }
 
 $conn->close();

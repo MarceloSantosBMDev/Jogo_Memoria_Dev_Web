@@ -1,168 +1,169 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap");
 
 .popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    animation: overlayFade 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: overlayFade 0.3s ease;
 }
 
 @keyframes overlayFade {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .popup-container {
-    position: relative;
-    width: 480px;
-    background: linear-gradient(70deg, #ecdcff 0%, #edfffd 50%);
-    border-radius: 25px;
-    border: 5px solid #000;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
-    animation: popupEntry 0.4s ease-out;
-    font-family: "Poppins", sans-serif;
-    text-align: center;
-    padding: 100px 45px 45px 45px;
-    color: #2c2f4a;
+  position: relative;
+  width: 480px;
+  background: linear-gradient(70deg, #ecdcff 0%, #edfffd 50%);
+  border-radius: 25px;
+  border: 5px solid #000;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  animation: popupEntry 0.4s ease-out;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  padding: 100px 45px 45px 45px;
+  color: #2c2f4a;
 }
 
 @keyframes popupEntry {
-    from {
-        transform: scale(0.95) translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-    }
+  from {
+    transform: scale(0.95) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
-/* Cabeçalho superior — varia por tipo */
+/* Cabeçalho superior – varia por tipo */
 .popup-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    border-bottom: 4px solid #000;
-    border-radius: 20px 20px 0 0;
-    clip-path: polygon(0 0, 100% 0, 100% 83%, 83% 100%, 0 100%, 0% 50%);
-    z-index: 0;
-}
-
-.popup-container.win::before {
-    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
-}
-
-.popup-container.lose::before {
-    background: linear-gradient(135deg, #e53935 0%, #b71c1c 100%);
-}
-
-.popup-container.cheat::before {
-    background: linear-gradient(135deg, #ffb300 0%, #ff9800 100%);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  border-bottom: 4px solid #000;
+  border-radius: 20px 20px 0 0;
+  clip-path: polygon(0 0, 100% 0, 100% 83%, 83% 100%, 0 100%, 0% 50%);
+  z-index: 0;
 }
 
 /* Título */
 .popup-title {
-    font-size: 2.2rem;
-    color: #fff;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    z-index: 3;
+  font-size: 2.2rem;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 3;
+  width: 90%;
+  max-width: 420px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.2;
+  max-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 /* Mensagem */
 .popup-message {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-bottom: 25px;
-    line-height: 1.6;
-    z-index: 2;
-    position: relative;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+  line-height: 1.6;
+  z-index: 2;
+  position: relative;
 }
 
 /* Botão */
 .popup-button {
-    width: 100%;
-    padding: 16px;
-    border: 4px solid #2c2f4a;
-    border-radius: 15px;
-    background: linear-gradient(135deg, #ffd93d 0%, #ffc107 100%);
-    color: #2c2f4a;
-    font-size: 18px;
-    font-weight: 800;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow:
-        0 6px 0 #b8860b,
-        0 8px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+  width: 100%;
+  padding: 16px;
+  border: 4px solid #2c2f4a;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #ffd93d 0%, #ffc107 100%);
+  color: #2c2f4a;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow:
+    0 6px 0 #b8860b,
+    0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .popup-button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.4),
-        transparent
-    );
-    transition: left 0.5s ease;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.5s ease;
 }
 
 .popup-button:hover::before {
-    left: 100%;
+  left: 100%;
 }
 
 .popup-button:hover {
-    transform: translateY(-3px);
-    box-shadow:
-        0 8px 0 #b8860b,
-        0 12px 25px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+  box-shadow:
+    0 8px 0 #b8860b,
+    0 12px 25px rgba(0, 0, 0, 0.4);
 }
 
 .popup-button:active {
-    transform: translateY(2px);
-    box-shadow:
-        0 2px 0 #b8860b,
-        0 4px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(2px);
+  box-shadow:
+    0 2px 0 #b8860b,
+    0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Responsividade */
 @media (max-width: 540px) {
-    .popup-container {
-        width: 90%;
-        padding: 85px 30px 35px 30px;
-    }
-    .popup-title {
-        font-size: 1.8rem;
-    }
+  .popup-container {
+    width: 90%;
+    padding: 85px 30px 35px 30px;
+  }
+  .popup-title {
+    font-size: 1.6rem;
+    max-height: 50px;
+    top: 15px;
+  }
 }

@@ -17,9 +17,10 @@ require_once('../PHP/config.php');
 			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
 			rel="stylesheet"
 		/>
-		<link rel="stylesheet" href="../Styles/header.css" />
-		<link rel="stylesheet" href="../Styles/login-register.css" />
-		<link rel="stylesheet" href="../Styles/footer.css" />
+		<link rel="stylesheet" href="../Styles/header.css">
+		<link rel="stylesheet" href="../Styles/login-register.css">
+		<link rel="stylesheet" href="../Styles/popup.css">
+		<link rel="stylesheet" href="../Styles/footer.css">
 	</head>
 	<body>
 		<?php 
