@@ -1,228 +1,203 @@
-const leaderboardData = {
-	classico: {
-		"2x2": [
-			{ username: "AshKetchum", moves: 12 },
-			{ username: "MistyWater", moves: 14 },
-			{ username: "BrockRock", moves: 16 },
-			{ username: "GaryOak", moves: 18 },
-			{ username: "ProfessorOak", moves: 20 },
-		],
-		"4x4": [
-			{ username: "Pikachu", moves: 45 },
-			{ username: "Charizard", moves: 48 },
-			{ username: "Eevee", moves: 52 },
-			{ username: "Mewtwo", moves: 55 },
-			{ username: "TeamRocket", moves: 60 },
-		],
-		"6x6": [
-			{ username: "MistyWater", moves: 95 },
-			{ username: "BrockRock", moves: 102 },
-			{ username: "AshKetchum", moves: 110 },
-			{ username: "GaryOak", moves: 125 },
-			{ username: "Pikachu", moves: 135 },
-		],
-		"8x8": [
-			{ username: "AshKetchum", moves: 180 },
-			{ username: "MistyWater", moves: 195 },
-			{ username: "BrockRock", moves: 210 },
-			{ username: "GaryOak", moves: 225 },
-			{ username: "Pikachu", moves: 240 },
-		],
-	},
-	tempo: {
-		"2x2": [
-			{ username: "GaryOak", time: 15 },
-			{ username: "AshKetchum", time: 18 },
-			{ username: "MistyWater", time: 22 },
-			{ username: "BrockRock", time: 25 },
-			{ username: "Pikachu", time: 28 },
-		],
-		"4x4": [
-			{ username: "Charizard", time: 95 },
-			{ username: "Eevee", time: 102 },
-			{ username: "Mewtwo", time: 110 },
-			{ username: "TeamRocket", time: 125 },
-			{ username: "AshKetchum", time: 135 },
-		],
-		"6x6": [
-			{ username: "BrockRock", time: 165 },
-			{ username: "MistyWater", time: 172 },
-			{ username: "GaryOak", time: 178 },
-			{ username: "AshKetchum", time: 180 },
-			{ username: "Pikachu", time: 195 },
-		],
-		"8x8": [
-			{ username: "MistyWater", time: 420 },
-			{ username: "BrockRock", time: 445 },
-			{ username: "GaryOak", time: 480 },
-			{ username: "ProfessorOak", time: 510 },
-			{ username: "Charizard", time: 540 },
-		],
-	},
-};
+class Leaderboard {
+  constructor() {
+    this.currentMode = "classico";
+    this.currentSize = "8x8";
+    this.init();
+  }
 
-let currentMode = "classico";
-let currentSize = "8x8";
+  init() {
+    this.bindEvents();
+    this.loadLeaderboard();
+  }
 
-// Função para obter a inicial do nome
-function getInitial(username) {
-	return username.charAt(0).toUpperCase();
-}
+  bindEvents() {
+    document.querySelectorAll(".mode-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        this.setActiveMode(e.target);
+      });
+    });
 
-// Função para formatar tempo em minutos:segundos
-function formatTime(seconds) {
-	const mins = Math.floor(seconds / 60);
-	const secs = seconds % 60;
-	return `${mins}:${secs.toString().padStart(2, "0")}`;
-}
+    document.querySelectorAll(".size-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        this.setActiveSize(e.target);
+      });
+    });
+  }
 
-// Função para criar badge de rank
-function createRankBadge(rank) {
-	let badgeClass = "default";
-	let badgeContent = rank;
+  setActiveMode(button) {
+    document.querySelectorAll(".mode-btn").forEach((btn) => {
+      btn.classList.remove("active");
+    });
+    button.classList.add("active");
+    this.currentMode = button.dataset.mode;
+    this.updateMetricHeader();
+    this.loadLeaderboard();
+  }
 
-	if (rank === 1) {
-		badgeClass = "gold";
-		badgeContent = `
-            <img src="https://em-content.zobj.net/source/apple/354/1st-place-medal_1f947.png" alt="Gold Medal" style="width: 28px; height: 28px;">
+  setActiveSize(button) {
+    document.querySelectorAll(".size-btn").forEach((btn) => {
+      btn.classList.remove("active");
+    });
+    button.classList.add("active");
+    this.currentSize = button.dataset.size;
+    this.loadLeaderboard();
+  }
+
+  updateMetricHeader() {
+    const header = document.getElementById("metric-header");
+    header.textContent =
+      this.currentMode === "classico" ? "Movimentos" : "Tempo";
+  }
+
+  async loadLeaderboard() {
+    const leaderboardList = document.getElementById("leaderboard-list");
+    leaderboardList.innerHTML =
+      '<div class="loading">Carregando rankings...</div>';
+
+    try {
+      const response = await fetch("../PHP/get_leaderboard.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          mode: this.currentMode,
+          size: this.currentSize,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        this.displayLeaderboard(data.leaderboard);
+      } else {
+        leaderboardList.innerHTML =
+          '<div class="no-data">Erro ao carregar rankings.</div>';
+      }
+    } catch (error) {
+      leaderboardList.innerHTML = '<div class="no-data">Erro de conexão.</div>';
+    }
+  }
+
+  displayLeaderboard(leaderboard) {
+    const leaderboardList = document.getElementById("leaderboard-list");
+
+    if (leaderboard.length === 0) {
+      leaderboardList.innerHTML =
+        '<div class="leaderboard-empty">Nenhum jogador ranqueado ainda.<br>Seja o primeiro a jogar!</div>';
+      return;
+    }
+
+    let html = "";
+
+    leaderboard.forEach((entry, index) => {
+      const position = index + 1;
+      const metricValue =
+        this.currentMode === "classico"
+          ? entry.best_score
+          : this.formatTime(entry.best_score);
+
+      html += this.createLeaderboardItem(entry, position, metricValue);
+    });
+
+    const missing = 10 - leaderboard.length;
+
+    for (let i = 0; i < missing; i++) {
+      html += `
+            <div class="leaderboard-item ghost-slot">
+                <div class="rank-column">
+                    <div class="rank-badge ghost-badge">—</div>
+                </div>
+
+                <div class="username-column ghost-text">
+                    <div class="user-avatar ghost-avatar">?</div>
+                    <span>—</span>
+                </div>
+
+                <div class="score-column ghost-text">
+                    <div class="score-badge ghost-score">—</div>
+                </div>
+            </div>
         `;
-	} else if (rank === 2) {
-		badgeClass = "silver";
-		badgeContent = `
-            <img src="https://em-content.zobj.net/source/apple/354/2nd-place-medal_1f948.png" alt="Silver Medal" style="width: 28px; height: 28px;">
+    }
+
+    leaderboardList.innerHTML = html;
+    this.addEntryAnimation();
+  }
+
+  createLeaderboardItem(player, rank, metricValue) {
+    const rankClass = rank <= 3 ? `rank-${rank}` : "";
+    const metricIcon = this.currentMode === "classico" ? "🔄" : "⏱️";
+
+    return `
+            <div class="leaderboard-item ${rankClass}">
+                <div class="rank-column">
+                    ${this.createRankBadge(rank)}
+                </div>
+                
+                <div class="username-column">
+                    <div class="user-avatar">${this.getInitial(player.username)}</div>
+                    <span>${this.escapeHtml(player.username)}</span>
+                </div>
+                
+                <div class="score-column">
+                    <div class="score-badge">
+                        <span class="score-icon">${metricIcon}</span>${metricValue}
+                    </div>
+                </div>
+            </div>
         `;
-	} else if (rank === 3) {
-		badgeClass = "bronze";
-		badgeContent = `
-            <img src="https://em-content.zobj.net/source/apple/354/3rd-place-medal_1f949.png" alt="Bronze Medal" style="width: 28px; height: 28px;">
-        `;
-	}
+  }
 
-	return `<div class="rank-badge ${badgeClass}">${badgeContent}</div>`;
+  createRankBadge(rank) {
+    let badgeClass = "default";
+    let badgeContent = rank;
+
+    if (rank === 1) {
+      badgeClass = "gold";
+      badgeContent = `<img src="https://em-content.zobj.net/source/apple/354/1st-place-medal_1f947.png" alt="Gold Medal" style="width: 28px; height: 28px;">`;
+    } else if (rank === 2) {
+      badgeClass = "silver";
+      badgeContent = `<img src="https://em-content.zobj.net/source/apple/354/2nd-place-medal_1f948.png" alt="Silver Medal" style="width: 28px; height: 28px;">`;
+    } else if (rank === 3) {
+      badgeClass = "bronze";
+      badgeContent = `<img src="https://em-content.zobj.net/source/apple/354/3rd-place-medal_1f949.png" alt="Bronze Medal" style="width: 28px; height: 28px;">`;
+    }
+
+    return `<div class="rank-badge ${badgeClass}">${badgeContent}</div>`;
+  }
+
+  getInitial(username) {
+    return username.charAt(0).toUpperCase();
+  }
+
+  formatTime(seconds) {
+    if (!seconds) return "N/A";
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  }
+
+  escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  addEntryAnimation() {
+    const items = document.querySelectorAll(".leaderboard-item");
+    items.forEach((item, index) => {
+      item.style.opacity = "0";
+      item.style.transform = "translateX(-20px)";
+      setTimeout(() => {
+        item.style.transition = "all 0.4s ease";
+        item.style.opacity = "1";
+        item.style.transform = "translateX(0)";
+      }, index * 60);
+    });
+  }
 }
 
-// Função para criar item da leaderboard
-function createLeaderboardItem(player, rank) {
-	const rankClass = rank <= 3 ? `rank-${rank}` : "";
-
-	let metricValue;
-	let metricIcon;
-
-	if (currentMode === "classico") {
-		metricValue = player.moves;
-		metricIcon = "🔄";
-	} else {
-		metricValue = formatTime(player.time);
-		metricIcon = "⏱️";
-	}
-
-	return `
-    <div class="leaderboard-item ${rankClass}">
-      <div class="rank-column">
-        ${createRankBadge(rank)}
-      </div>
-      
-      <div class="username-column">
-        <div class="user-avatar">${getInitial(player.username)}</div>
-        <span>${player.username}</span>
-      </div>
-      
-      <div class="score-column">
-        <div class="score-badge">
-          <span class="score-icon">${metricIcon}</span>${metricValue}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-// Função para renderizar a leaderboard
-function renderLeaderboard() {
-	const leaderboardList = document.getElementById("leaderboard-list");
-	const metricHeader = document.getElementById("metric-header");
-
-	if (!leaderboardList) {
-		console.error("Elemento leaderboard-list não encontrado!");
-		return;
-	}
-
-	if (metricHeader) {
-		metricHeader.textContent =
-			currentMode === "classico" ? "Movimentos" : "Tempo";
-	}
-
-	const currentData = leaderboardData[currentMode]?.[currentSize] || [];
-
-	let sortedData;
-	if (currentMode === "classico") {
-		sortedData = [...currentData].sort((a, b) => a.moves - b.moves);
-	} else {
-		sortedData = [...currentData].sort((a, b) => a.time - b.time);
-	}
-
-	if (sortedData.length === 0) {
-		leaderboardList.innerHTML = `
-      <div class="leaderboard-empty">
-        <p>Nenhum jogador ranqueado ainda.</p>
-        <p>Seja o primeiro a jogar!</p>
-      </div>
-    `;
-		return;
-	}
-
-	const leaderboardHTML = sortedData
-		.map((player, index) => createLeaderboardItem(player, index + 1))
-		.join("");
-
-	leaderboardList.innerHTML = leaderboardHTML;
-}
-
-function addEntryAnimation() {
-	const items = document.querySelectorAll(".leaderboard-item");
-	items.forEach((item, index) => {
-		item.style.opacity = "0";
-		item.style.transform = "translateX(-20px)";
-		setTimeout(() => {
-			item.style.transition = "all 0.4s ease";
-			item.style.opacity = "1";
-			item.style.transform = "translateX(0)";
-		}, index * 60);
-	});
-}
-
-function switchMode(mode) {
-	currentMode = mode;
-	document.querySelectorAll(".mode-btn").forEach((btn) => {
-		btn.classList.remove("active");
-	});
-	document.querySelector(`[data-mode="${mode}"]`).classList.add("active");
-	renderLeaderboard();
-	addEntryAnimation();
-}
-
-function switchSize(size) {
-	currentSize = size;
-	document.querySelectorAll(".size-btn").forEach((btn) => {
-		btn.classList.remove("active");
-	});
-	document.querySelector(`[data-size="${size}"]`).classList.add("active");
-	renderLeaderboard();
-	addEntryAnimation();
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-	document.querySelectorAll(".mode-btn").forEach((btn) => {
-		btn.addEventListener("click", () => {
-			switchMode(btn.dataset.mode);
-		});
-	});
-
-	document.querySelectorAll(".size-btn").forEach((btn) => {
-		btn.addEventListener("click", () => {
-			switchSize(btn.dataset.size);
-		});
-	});
-
-	renderLeaderboard();
-	setTimeout(addEntryAnimation, 100);
+document.addEventListener("DOMContentLoaded", () => {
+  new Leaderboard();
 });

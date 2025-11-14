@@ -1,3 +1,12 @@
+<?php
+$path_prefix = '../';
+$header_theme_class = 'theme-purple';
+
+require_once('../PHP/config.php');
+require_once('../PHP/protect.php');
+require_once('../PHP/connection.php');
+?>
+
 <!doctype html>
 <html lang="pt-br">
 	<head>
@@ -19,46 +28,9 @@
 	</head>
 
 	<body>
-		<section>
-			<header class="header theme-purple">
-				<div class="logo-container">
-					<img src="../image/logo.png" alt="Logo" class="logo">
-					<h1 class="title">Memory Game</h1>
-				</div>
-				<nav class="nav">
-					<a
-						href="../index.html"
-						class="nav-link"
-						style="
-							cursor:
-								url(&quot;../image/pointer.png&quot;) 8 8,
-								pointer;
-						"
-						>Home</a
-					>
-					<a
-						href="login.html"
-						class="nav-link"
-						style="
-							cursor:
-								url(&quot;../image/pointer.png&quot;) 8 8,
-								pointer;
-						"
-						>Login</a
-					>
-					<a
-						href="register.html"
-						class="nav-link"
-						style="
-							cursor:
-								url(&quot;../image/pointer.png&quot;) 8 8,
-								pointer;
-						"
-						>Register</a
-					>
-				</nav>
-			</header>
-		</section>
+		<?php 
+            include '../PHP/header.php'; 
+    	?>
 
 		<main>
 			<section class="leaderboard-table">
@@ -77,20 +49,22 @@
 							</div>
 
 							<div class="size-selector">
-								<button class="size-btn" data-size="2x2">2x2</button>
-								<button class="size-btn" data-size="4x4">4x4</button>
-								<button class="size-btn" data-size="6x6">6x6</button>
-								<button class="size-btn active" data-size="8x8">8x8</button>
+								<button class="size-btn" data-size="2x2">Iniciais</button>
+								<button class="size-btn" data-size="4x4">Raros</button>
+								<button class="size-btn" data-size="6x6">Lendários</button>
+								<button class="size-btn active" data-size="8x8">Míticos</button>
 							</div>
 						</div>
 
 						<div class="leaderboard-header">
-							<span>Place</span>
+							<span>Posição</span>
 							<span>Jogador</span>
 							<span id="metric-header">Movimentos</span>
 						</div>
 
-						<div class="leaderboard-list" id="leaderboard-list"></div>
+						<div class="leaderboard-list" id="leaderboard-list">
+							<div class="loading">Carregando rankings...</div>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -108,7 +82,6 @@
 			</footer>
 		</main>
 
-		<script src="../Scripts/auth.js"></script>
 		<script src="../Scripts/leaderboard.js"></script>
 	</body>
 </html>
