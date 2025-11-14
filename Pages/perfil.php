@@ -15,31 +15,100 @@ if (!isset($_SESSION['user_id'])) {
 }
 $user_id = intval($_SESSION['user_id']);
 
+// Função para validar nome completo
+function validarNomeCompleto($nome) {
+    $nome = trim($nome);
+    $partes = array_filter(explode(' ', $nome), function($parte) {
+        return strlen(trim($parte)) > 0;
+    });
+    
+    if (count($partes) < 2) {
+        return "Insira nome e sobrenome completos.";
+    }
+    
+    if (strlen($nome) < 5) {
+        return "O nome deve ter pelo menos 5 caracteres.";
+    }
+    
+    if (!preg_match('/^[a-zA-ZÀ-ÿ\s]+$/', $nome)) {
+        return "O nome deve conter apenas letras.";
+    }
+    
+    return '';
+}
+
+// Função para validar telefone
+function validarTelefone($telefone) {
+    $digitos = preg_replace('/\D/', '', $telefone);
+    $tamanho = strlen($digitos);
+    
+    if ($tamanho < 10 || $tamanho > 11) {
+        return "Telefone inválido. Deve ter 10 ou 11 dígitos com DDD.";
+    }
+    
+    // Valida DDD (primeiros 2 dígitos entre 11 e 99)
+    $ddd = intval(substr($digitos, 0, 2));
+    if ($ddd < 11 || $ddd > 99) {
+        return "DDD inválido.";
+    }
+    
+    // Verifica se não é uma sequência repetida
+    if (preg_match('/^(\d)\1+$/', $digitos)) {
+        return "Telefone inválido.";
+    }
+    
+    return '';
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $full_name = trim($_POST['full_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
 
+    // Validação do nome completo
     if ($full_name === '') {
         $errors[] = "O nome não pode ficar vazio.";
+    } else {
+        $erro_nome = validarNomeCompleto($full_name);
+        if ($erro_nome) {
+            $errors[] = $erro_nome;
+        }
     }
-    if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Informe um e-mail válido.";
+
+    // Validação do email
+    if ($email === '') {
+        $errors[] = "O e-mail não pode ficar vazio.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Informe um formato de e-mail válido (exemplo@dominio.com).";
+    } elseif (strlen($email) > 255) {
+        $errors[] = "O e-mail é muito longo (máximo 255 caracteres).";
     }
-    if ($phone === '' || strlen(preg_replace('/\D/', '', $phone)) < 8) {
-        $errors[] = "Informe um telefone válido.";
+
+    // Validação do telefone
+    if ($phone === '') {
+        $errors[] = "O telefone não pode ficar vazio.";
+    } else {
+        $erro_telefone = validarTelefone($phone);
+        if ($erro_telefone) {
+            $errors[] = $erro_telefone;
+        }
     }
 
     if (empty($errors)) {
+        // Verifica se o email já está em uso por outro usuário
         $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? AND id <> ? LIMIT 1");
         $stmt->bind_param('si', $email, $user_id);
         $stmt->execute();
         $stmt->store_result();
+        
         if ($stmt->num_rows > 0) {
-            $errors[] = "O email informado já está em uso por outro usuário.";
+            $errors[] = "O e-mail informado já está em uso por outro usuário.";
             $stmt->close();
         } else {
             $stmt->close();
+
+            // Limpa o telefone para salvar apenas números
+            $phone_clean = preg_replace('/\D/', '', $phone);
 
             $params = [];
             $types = '';
@@ -55,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $set_parts[] = "phone = ?";
             $types .= 's';
-            $params[] = $phone;
+            $params[] = $phone_clean;
 
             $sql = "UPDATE users SET " . implode(', ', $set_parts) . " WHERE id = ?";
             $types .= 'i';
@@ -63,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $stmt = $conn->prepare($sql);
             if ($stmt === false) {
-                $error_msg = "Erro ao preparar atualização: " . $conn->error;
+                $error_msg = "Erro ao preparar atualização. Por favor, tente novamente.";
             } else {
                 $bind_names[] = $types;
                 for ($i = 0; $i < count($params); $i++) {
@@ -75,8 +144,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($stmt->execute()) {
                     $success_msg = "Perfil atualizado com sucesso!";
+                    // Atualiza as variáveis de exibição
+                    $_POST['full_name'] = $full_name;
+                    $_POST['email'] = $email;
+                    $_POST['phone'] = $phone;
                 } else {
-                    $error_msg = "Erro ao atualizar perfil: " . $stmt->error;
+                    $error_msg = "Erro ao atualizar perfil. Por favor, tente novamente.";
                 }
                 $stmt->close();
             }
@@ -96,10 +169,21 @@ $display_full_name = $_POST['full_name'] ?? $full_name_db;
 $display_email = $_POST['email'] ?? $email_db;
 $display_phone = $_POST['phone'] ?? $phone_db;
 
+// Formatar telefone para exibição
+if ($display_phone && !strpos($display_phone, '(')) {
+    $display_phone = preg_replace('/\D/', '', $display_phone);
+    if (strlen($display_phone) == 11) {
+        $display_phone = preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $display_phone);
+    } elseif (strlen($display_phone) == 10) {
+        $display_phone = preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $display_phone);
+    }
+}
+
 // Formatar CPF e data
 $cpf_formatado = $cpf_db ? preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $cpf_db) : '';
 $data_formatada = $birth_date_db ? date('d/m/Y', strtotime($birth_date_db)) : '';
 
+// Histórico de partidas (últimas 5)
 $historico_stmt = $conn->prepare("
     SELECT
         game_mode, 
@@ -131,6 +215,7 @@ while ($historico_stmt->fetch()) {
 }
 $historico_stmt->close();
 
+// Histórico completo
 $historico_completo_stmt = $conn->prepare("
     SELECT
         game_mode, 
@@ -191,15 +276,12 @@ $taxa_vitoria = $total_partidas > 0 ? round(($total_vitorias / $total_partidas) 
 		<link rel="stylesheet" href="../Styles/leaderboard.css">
 		<link rel="stylesheet" href="../Styles/profile.css">
 		<link rel="stylesheet" href="../Styles/profile_popup.css">
-
 		<link rel="stylesheet" href="../Styles/footer.css">
 		<link rel="stylesheet" href="../Styles/header.css">
 	</head>
 
 	<body>
-		<?php 
-            include '../PHP/header.php'; 
-        ?>
+		<?php include '../PHP/header.php'; ?>
 
 		<main>
 			<div class="container-flex">
@@ -208,9 +290,9 @@ $taxa_vitoria = $total_partidas > 0 ? round(($total_vitorias / $total_partidas) 
 						src="../pokemons/umbreon.gif"
 						alt="Umbreon"
 						class="umbreon_espeon"
-					/>
+					>
 
-					<form action="" method="post">
+					<form id="profileForm" method="post" novalidate>
 						<h3>Perfil</h3>
 						
 						<?php if ($success_msg): ?>
@@ -275,7 +357,6 @@ $taxa_vitoria = $total_partidas > 0 ? round(($total_vitorias / $total_partidas) 
 									value="<?= htmlspecialchars($display_email) ?>"
 									required
 									autocomplete="email"
-
 								>
 							</div>
 						</div>
@@ -293,7 +374,6 @@ $taxa_vitoria = $total_partidas > 0 ? round(($total_vitorias / $total_partidas) 
 									disabled
 									autocomplete="off"
 									style="background-color: grey;"
-
 								>
 							</div>
 
@@ -309,7 +389,6 @@ $taxa_vitoria = $total_partidas > 0 ? round(($total_vitorias / $total_partidas) 
 									disabled
 									autocomplete="bday"
 									style="background-color: grey;"
-
 								>
 							</div>
 						</div>
@@ -405,7 +484,6 @@ $taxa_vitoria = $total_partidas > 0 ? round(($total_vitorias / $total_partidas) 
 								<p>Comece a jogar para ver seu histórico aqui!</p>
 							</div>
 						<?php else: ?>
-							<!-- Estatísticas -->
 							<div class="history-stats">
 								<div class="stat-item">
 									<span class="stat-value"><?= $total_partidas ?></span>
@@ -479,5 +557,7 @@ $taxa_vitoria = $total_partidas > 0 ? round(($total_vitorias / $total_partidas) 
 
 		<script src="../Scripts/profilephoto.js"></script>
 		<script src="../Scripts/profile_popup.js"></script>
+		<script src="../Scripts/profile_form_handler.js"></script>
+
 	</body>
 </html>

@@ -116,21 +116,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let classePokebola = "";
 
-      switch (dificuldade_escolhida) {
-        case 0:
-          classePokebola = "pokeball";
-          break;
-        case 1:
-          classePokebola = "greatball";
-          break;
-        case 2:
-          classePokebola = "ultraball";
-          break;
-        case 3:
-          classePokebola = "masterball";
-          break;
-        default:
-          return;
+      if (ModoEscolhido === 1) {
+        classePokebola = "timerball";
+      } else {
+        switch (dificuldade_escolhida) {
+          case 0:
+            classePokebola = "pokeball";
+            break;
+          case 1:
+            classePokebola = "greatball";
+            break;
+          case 2:
+            classePokebola = "ultraball";
+            break;
+          case 3:
+            classePokebola = "masterball";
+            break;
+          default:
+            return;
+        }
       }
 
       if (classePokebola) {

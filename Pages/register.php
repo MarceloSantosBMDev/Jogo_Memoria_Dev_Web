@@ -8,15 +8,15 @@ require_once('../PHP/config.php');
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Cadastro - Memory Game</title>
 
 		<link
 			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
 			rel="stylesheet"
-		/>
+		>
 		<link rel="stylesheet" href="../Styles/footer.css">
 		<link rel="stylesheet" href="../Styles/login-register.css">
 		<link rel="stylesheet" href="../Styles/popup.css">
@@ -35,7 +35,7 @@ require_once('../PHP/config.php');
 						src="../pokemons/umbreon.gif"
 						alt="Umbreon"
 						class="umbreon_espeon"
-					/>
+					>
 
 					<form action="register" id="registerForm" novalidate>
 						<h3>Cadastro</h3>
@@ -49,7 +49,7 @@ require_once('../PHP/config.php');
 								placeholder="Nome Completo"
 								required
 								autocomplete="name"
-							/>
+							>
 						</div>
 
 						<div class="input-row">
@@ -62,7 +62,7 @@ require_once('../PHP/config.php');
 									placeholder="Usuário"
 									required
 									autocomplete="username"
-								/>
+								>
 							</div>
 
 							<div class="input-wrapper half">
@@ -74,7 +74,7 @@ require_once('../PHP/config.php');
 									placeholder="Email"
 									required
 									autocomplete="email"
-								/>
+								>
 							</div>
 						</div>
 
@@ -87,7 +87,7 @@ require_once('../PHP/config.php');
 								placeholder="Senha (mínimo 6 caracteres)"
 								required
 								autocomplete="new-password"
-							/>
+							>
 						</div>
 
 						<div class="input-row">
@@ -101,7 +101,7 @@ require_once('../PHP/config.php');
 									required
 									maxlength="14"
 									autocomplete="off"
-								/>
+								>
 							</div>
 
 							<div class="input-wrapper half">
@@ -113,7 +113,7 @@ require_once('../PHP/config.php');
 									placeholder="Nascimento"
 									required
 									autocomplete="bday"
-								/>
+								>
 							</div>
 						</div>
 
@@ -126,7 +126,7 @@ require_once('../PHP/config.php');
 								placeholder="Telefone (DDD) 99999-9999"
 								required
 								autocomplete="tel"
-							/>
+							>
 						</div>
 
 						<button type="submit" class="Submit_Button register">
@@ -136,7 +136,7 @@ require_once('../PHP/config.php');
 						<p class="p_login">
 							Já tem um login?
 							<a
-								href="login.html"
+								href="login.php"
 								style="cursor: url('../image/pointer.png') 8 8, pointer"
 								>Logar-se</a
 							>

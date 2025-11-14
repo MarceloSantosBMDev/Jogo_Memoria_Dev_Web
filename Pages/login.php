@@ -8,15 +8,15 @@ require_once('../PHP/config.php');
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-	<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Login - Memory Game</title>
 
 		<link
 			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
 			rel="stylesheet"
-		/>
+		>
 		<link rel="stylesheet" href="../Styles/header.css">
 		<link rel="stylesheet" href="../Styles/login-register.css">
 		<link rel="stylesheet" href="../Styles/popup.css">
@@ -31,8 +31,8 @@ require_once('../PHP/config.php');
 			<div class="container-flex">
 				<div class="center_container">
 					<div class="shine"></div>
-					<img src="../pokemons/flareon.gif" alt="Flareon" class="flareon" />
-					<img src="../pokemons/glaceon.gif" alt="Glaceon" class="glaceon" />
+					<img src="../pokemons/flareon.gif" alt="Flareon" class="flareon">
+					<img src="../pokemons/glaceon.gif" alt="Glaceon" class="glaceon">
 
 					<form action="#" id="loginForm">
 						<h3>Login</h3>
@@ -46,7 +46,7 @@ require_once('../PHP/config.php');
 								placeholder="Usuário"
 								required
 								autocomplete="username"
-							/>
+							>
 						</div>
 
 						<div class="input-wrapper">
@@ -58,7 +58,7 @@ require_once('../PHP/config.php');
 								placeholder="Senha"
 								required
 								autocomplete="current-password"
-							/>
+							>
 						</div>
 
 						<button type="submit" class="Submit_Button">Entrar</button>
@@ -66,7 +66,7 @@ require_once('../PHP/config.php');
 						<p class="p_login">
 							Não tem uma conta?
 							<a
-								href="register.html"
+								href="register.php"
 								style="cursor: url('../image/pointer.png') 8 8, pointer"
 								>Cadastre-se</a
 							>

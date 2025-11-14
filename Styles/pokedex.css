@@ -1,291 +1,291 @@
 .pokedex {
-	height: 700px;
-	width: 100%;
-	max-width: 450px;
-	background-color: #d14a4a;
-	border: 5px solid #333;
-	border-radius: 20px 20px 20px 60px;
-	box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
-	font-family: "Press Start 2P", cursive;
-	margin-left: 50%;
-	margin-right: 50%;
-	margin-left: auto;
-	margin-right: auto;
+  height: 700px;
+  width: 100%;
+  max-width: 450px;
+  background-color: #d14a4a;
+  border: 5px solid #333;
+  border-radius: 20px 20px 20px 60px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
+  font-family: "Press Start 2P", cursive;
+  margin-left: 50%;
+  margin-right: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .topo-pokedex {
-	background-color: #b83c3c;
-	padding: 20px;
-	border-radius: 15px 15px 0 0;
-	border-bottom: 5px solid #333;
+  background-color: #b83c3c;
+  padding: 20px;
+  border-radius: 15px 15px 0 0;
+  border-bottom: 5px solid #333;
 }
 
 .luz_cima_pokedex {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .luz_azul_grande {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	border: 4px solid white;
-	background-color: #3ca3d5;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid white;
+  background-color: #3ca3d5;
 }
 
 .luz_vermelha_pequena {
-	border-radius: 50%;
-	width: 20px;
-	height: 20px;
-	border: 2px solid white;
-	background-color: #ff4141;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid white;
+  background-color: #ff4141;
 }
 .luz_amarela_pequena {
-	border-radius: 50%;
-	width: 20px;
-	height: 20px;
-	border: 2px solid white;
-	background-color: #ffde3a;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid white;
+  background-color: #ffde3a;
 }
 .luz_verde_pequena {
-	border-radius: 50%;
-	width: 20px;
-	height: 20px;
-	border: 2px solid white;
-	background-color: #7bed6b;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid white;
+  background-color: #7bed6b;
 }
 
 .tela-container {
-	background-color: #333;
-	padding: 10px;
-	border-radius: 10px;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .tela {
-	background-color: #93d6de;
-	border: 5px inset #4a4a4a;
-	min-height: 250px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	color: #333;
-	padding: 15px;
-	gap: 10px;
+  background-color: #93d6de;
+  border: 5px inset #4a4a4a;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #333;
+  padding: 15px;
+  gap: 10px;
 }
 
 .tela h2 {
-	font-size: 1.2em;
-	color: #000;
+  font-size: 1.2em;
+  color: #000;
 }
 
 .tela p {
-	font-size: 0.8em;
-	color: #444;
+  font-size: 0.8em;
+  color: #444;
 }
 
 .tela img {
-	max-width: 100px;
-	margin-top: 15px;
+  max-width: 100px;
+  margin-top: 15px;
 }
 
 .dobrada {
-	height: 30px;
-	background-color: #a33232;
-	border-top: 5px solid #333;
-	border-bottom: 5px solid #333;
+  height: 30px;
+  background-color: #a33232;
+  border-top: 5px solid #333;
+  border-bottom: 5px solid #333;
 }
 
 .botoes-pokedex {
-	padding: 20px;
-	border-radius: 0 0 15px 55px;
+  padding: 20px;
+  border-radius: 0 0 15px 55px;
 }
 
 .controles {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 15px;
-	margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
 .bottom-controls-layout {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap;
-	gap: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .d-pad-container {
-	flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .d-pad {
-	position: relative;
-	margin-left: 10px;
-	margin-top: 10px;
-	width: 120px;
-	height: 120px;
+  position: relative;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 120px;
+  height: 120px;
 }
 
 .d-pad div {
-	position: absolute;
-	background-color: #333;
-	box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.5);
-	cursor:
-		url("../image/pointer.png") 8 8,
-		pointer;
+  position: absolute;
+  background-color: #333;
+  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.5);
+  cursor:
+    url("../image/pointer.png") 8 8,
+    pointer;
 }
 
 .d-pad-up,
 .d-pad-down {
-	width: 40px;
-	height: 40px;
-	left: 40px;
+  width: 40px;
+  height: 40px;
+  left: 40px;
 }
 .d-pad-left,
 .d-pad-right {
-	width: 40px;
-	height: 40px;
-	top: 40px;
+  width: 40px;
+  height: 40px;
+  top: 40px;
 }
 .d-pad-up {
-	top: 0;
-	border-radius: 5px 5px 0 0;
+  top: 0;
+  border-radius: 5px 5px 0 0;
 }
 .d-pad-down {
-	bottom: 0;
-	border-radius: 0 0 5px 5px;
+  bottom: 0;
+  border-radius: 0 0 5px 5px;
 }
 .d-pad-left {
-	left: 0;
-	border-radius: 5px 0 0 5px;
+  left: 0;
+  border-radius: 5px 0 0 5px;
 }
 .d-pad-right {
-	right: 0;
-	border-radius: 0 5px 5px 0;
+  right: 0;
+  border-radius: 0 5px 5px 0;
 }
 .d-pad-center {
-	width: 40px;
-	height: 40px;
-	top: 40px;
-	left: 40px;
-	background-color: #444;
+  width: 40px;
+  height: 40px;
+  top: 40px;
+  left: 40px;
+  background-color: #444;
 }
 
 .d-pad-btn {
-	cursor:
-		url("image/pointer.png") 8 8,
-		pointer;
-	transition: background-color 0.1s;
+  cursor:
+    url("image/pointer.png") 8 8,
+    pointer;
+  transition: background-color 0.1s;
 }
 
 .d-pad-btn:hover {
-	background-color: #555;
+  background-color: #555;
 }
 
 .d-pad-btn:active {
-	background-color: #222;
-	transform: scale(0.98);
+  background-color: #222;
+  transform: scale(0.98);
 }
 
 .action-buttons {
-	display: flex;
-	gap: 20px;
-	margin-right: 10px;
+  display: flex;
+  gap: 20px;
+  margin-right: 10px;
 }
 
 .button-group {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 }
 
 .button-group label {
-	font-size: 12px;
-	color: #333;
-	text-shadow: 1px 1px 0px white;
+  font-size: 12px;
+  color: #333;
+  text-shadow: 1px 1px 0px white;
 }
 
 .action-btn {
-	width: 60px;
-	height: 60px;
-	border-radius: 50%;
-	border: 3px solid #333;
-	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
-	cursor:
-		url("../image/pointer.png") 8 8,
-		pointer;
-	transition: all 0.1s ease;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid #333;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+  cursor:
+    url("../image/pointer.png") 8 8,
+    pointer;
+  transition: all 0.1s ease;
 }
 
 .action-btn:active {
-	transform: translateY(2px) scale(0.95);
-	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  transform: translateY(2px) scale(0.95);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .btn-a {
-	background-color: #e63946;
+  background-color: #e63946;
 }
 .btn-b {
-	background-color: #457b9d;
+  background-color: #457b9d;
 }
 
 .selectable-option {
-	font-size: 1.5em;
-	color: #e63946;
-	padding: 10px;
-	border: 3px dashed #333;
-	border-radius: 5px;
-	background-color: rgba(255, 255, 255, 0.2);
-	animation: pulse 1.5s infinite;
+  font-size: 1.5em;
+  color: #e63946;
+  padding: 10px;
+  border: 3px dashed #333;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.2);
+  animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
-	0% {
-		transform: scale(1);
-	}
-	50% {
-		transform: scale(1.05);
-	}
-	100% {
-		transform: scale(1);
-	}
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 #screen-hint-text {
-	margin-top: 25px;
-	font-size: 0.8em;
-	color: #444;
+  margin-top: 25px;
+  font-size: 0.8em;
+  color: #444;
 }
 
 .summary-screen {
-	display: flex;
-	flex-direction: column;
-	gap: 15px;
-	align-items: flex-start;
-	width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .summary-screen p {
-	font-size: 1em;
-	color: #333;
+  font-size: 1em;
+  color: #333;
 }
 
 .summary-screen span {
-	color: #e63946;
-	font-weight: bold;
+  color: #e63946;
+  font-weight: bold;
 }
 
 .action-btn.disabled {
-	opacity: 0.5;
-	background-color: #555 !important;
-	cursor: not-allowed;
-	transform: none;
-	box-shadow: none;
+  opacity: 0.5;
+  background-color: #555 !important;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }

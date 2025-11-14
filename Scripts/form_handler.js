@@ -7,7 +7,7 @@
       success: "linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)",
       error: "linear-gradient(135deg, #e53935 0%, #b71c1c 100%)",
       warning: "linear-gradient(135deg, #ffb300 0%, #ff9800 100%)",
-      info: "linear-gradient(135deg, #2196f3 0%, #1565c0 100%)"
+      info: "linear-gradient(135deg, #2196f3 0%, #1565c0 100%)",
     };
 
     const overlay = document.createElement("div");
@@ -99,6 +99,75 @@
     return true;
   }
 
+  function validarData(dataString) {
+    const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+    if (!regex.test(dataString)) {
+      return { valido: false, erro: "Formato: DD/MM/AAAA." };
+    }
+
+    const [, day, month, year] = dataString.match(regex);
+    const dia = parseInt(day, 10);
+    const mes = parseInt(month, 10);
+    const ano = parseInt(year, 10);
+
+    // Valida mês
+    if (mes < 1 || mes > 12) {
+      return { valido: false, erro: "Mês inválido (deve ser entre 01 e 12)." };
+    }
+
+    // Dias por mês
+    const diasPorMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // Verifica ano bissexto
+    const ehBissexto = (ano % 4 === 0 && ano % 100 !== 0) || ano % 400 === 0;
+    if (ehBissexto) {
+      diasPorMes[1] = 29;
+    }
+
+    // Valida dia
+    if (dia < 1 || dia > diasPorMes[mes - 1]) {
+      return {
+        valido: false,
+        erro: `Dia inválido para ${mes}/${ano} (máximo ${diasPorMes[mes - 1]} dias).`,
+      };
+    }
+
+    // Valida ano (não pode ser futuro ou muito antigo)
+    const anoAtual = new Date().getFullYear();
+    if (ano < 1900 || ano > anoAtual) {
+      return {
+        valido: false,
+        erro: `Ano inválido (deve ser entre 1900 e ${anoAtual}).`,
+      };
+    }
+
+    // Verifica se a data é válida como objeto Date
+    const birthDate = new Date(ano, mes - 1, dia);
+    if (
+      birthDate.getDate() !== dia ||
+      birthDate.getMonth() !== mes - 1 ||
+      birthDate.getFullYear() !== ano
+    ) {
+      return { valido: false, erro: "Data inválida." };
+    }
+
+    // Verifica idade mínima
+    const minAgeDate = new Date();
+    minAgeDate.setFullYear(minAgeDate.getFullYear() - 13);
+    if (birthDate > minAgeDate) {
+      return { valido: false, erro: "Você deve ter pelo menos 13 anos." };
+    }
+
+    // Verifica se não é uma data muito antiga (mais de 120 anos)
+    const maxAgeDate = new Date();
+    maxAgeDate.setFullYear(maxAgeDate.getFullYear() - 120);
+    if (birthDate < maxAgeDate) {
+      return { valido: false, erro: "Data de nascimento muito antiga." };
+    }
+
+    return { valido: true };
+  }
+
   const validators = {
     username: (value) => {
       if (!value) return "Este campo é obrigatório.";
@@ -131,20 +200,18 @@
     },
     data: (value) => {
       if (!value) return "Este campo é obrigatório.";
-      const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-      if (!regex.test(value)) return "Formato: DD/MM/AAAA.";
-      const [, day, month, year] = value.match(regex);
-      const birthDate = new Date(year, month - 1, day);
-      const minAgeDate = new Date();
-      minAgeDate.setFullYear(minAgeDate.getFullYear() - 13);
-      if (birthDate > minAgeDate) return "Você deve ter pelo menos 13 anos.";
-      return "";
+      const resultado = validarData(value);
+      return resultado.valido ? "" : resultado.erro;
     },
     Telefone: (value) => {
       if (!value) return "Este campo é obrigatório.";
-      if (value.replace(/\D/g, "").length < 10) {
-        return "Telefone inválido (mínimo 10 dígitos).";
+
+      const digitos = value.replace(/\D/g, "").length;
+
+      if (digitos < 10 || digitos > 11) {
+        return "Telefone inválido (deve ter 10 ou 11 dígitos).";
       }
+
       return "";
     },
   };
@@ -268,13 +335,6 @@
                 }
               }
               focusFirstError(form);
-
-              // Popup de validação
-              exibirPopup(
-                "Erro de Validação",
-                data.message || "Por favor, corrija os campos marcados.",
-                "warning",
-              );
             } else {
               // Erro genérico (do servidor)
               exibirPopup(

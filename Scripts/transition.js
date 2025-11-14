@@ -1,142 +1,151 @@
 class PageTransition {
-	constructor() {
-		this.transitionElement = null;
-		this.superior = null;
-		this.inferior = null;
-		this.centro = null;
-		this.botao = null;
-		this.init();
-	}
+  constructor() {
+    this.transitionElement = null;
+    this.superior = null;
+    this.inferior = null;
+    this.centro = null;
+    this.botao = null;
+    this.init();
+  }
 
-	init() {
-		this.criarElementosTransicao();
+  init() {
+    this.criarElementosTransicao();
 
-		this.aplicarEstiloPokebola();
+    this.aplicarEstiloPokebola();
 
-		this.colocarLinkListener();
+    this.colocarLinkListener();
 
-		this.animarTransicao();
-	}
+    this.animarTransicao();
+  }
 
-	// coloca os elementos da transicao na pagina
-	criarElementosTransicao() {
-		const container = document.createElement("div");
-		container.className = "page-transition";
+  // coloca os elementos da transicao na pagina
+  criarElementosTransicao() {
+    const container = document.createElement("div");
+    container.className = "page-transition";
 
-		const superior = document.createElement("div");
-		superior.className = "pokeball-superior";
+    const superior = document.createElement("div");
+    superior.className = "pokeball-superior";
 
-		const inferior = document.createElement("div");
-		inferior.className = "pokeball-inferior";
+    const inferior = document.createElement("div");
+    inferior.className = "pokeball-inferior";
 
-		const centro = document.createElement("div");
-		centro.className = "pokeball-centro";
+    const centro = document.createElement("div");
+    centro.className = "pokeball-centro";
 
-		const botao = document.createElement("div");
-		botao.className = "pokeball-botao";
+    const botao = document.createElement("div");
+    botao.className = "pokeball-botao";
 
-		centro.appendChild(botao);
-		container.appendChild(superior);
-		container.appendChild(inferior);
-		container.appendChild(centro);
+    centro.appendChild(botao);
+    container.appendChild(superior);
+    container.appendChild(inferior);
+    container.appendChild(centro);
 
-		document.body.appendChild(container);
+    document.body.appendChild(container);
 
-		this.transitionElement = container;
-		this.superior = superior;
-		this.inferior = inferior;
-		this.centro = centro;
-		this.botao = botao;
-	}
+    this.transitionElement = container;
+    this.superior = superior;
+    this.inferior = inferior;
+    this.centro = centro;
+    this.botao = botao;
+  }
 
-	aplicarEstiloPokebola() {
-		const urlParams = new URLSearchParams(window.location.search);
-		const modoDificuldade = parseInt(urlParams.get("modo_dificuldade")) || 0;
-		let classePokebola = "";
+  aplicarEstiloPokebola() {
+    const urlParams = new URLSearchParams(window.location.search);
 
-		switch (modoDificuldade) {
-			case 1:
-				classePokebola = "greatball";
-				break;
-			case 2:
-				classePokebola = "ultraball";
-				break;
-			case 3:
-				classePokebola = "masterball";
-				break;
-			default:
-				return;
-		}
+    const modoEscolhido = parseInt(urlParams.get("modo_escolha")) || 0;
+    const modoDificuldade = parseInt(urlParams.get("modo_dificuldade")) || 0;
 
-		// Aplica a classe em todos os elementos
-		if (classePokebola) {
-			this.superior.classList.add(classePokebola);
-			this.inferior.classList.add(classePokebola);
-			this.centro.classList.add(classePokebola);
-			this.botao.classList.add(classePokebola);
-		}
-	}
+    let classePokebola = "";
 
-	// coloca os direcionamentos de link para os 'a' e 'button'
-	colocarLinkListener() {
-		const links = document.querySelectorAll(".page-link, .transition-link");
+    if (modoEscolhido === 1) {
+      classePokebola = "timerball";
+    } else {
+      switch (modoDificuldade) {
+        case 0:
+          classePokebola = "pokeball";
+          break;
+        case 1:
+          classePokebola = "greatball";
+          break;
+        case 2:
+          classePokebola = "ultraball";
+          break;
+        case 3:
+          classePokebola = "masterball";
+          break;
+        default:
+          return;
+      }
+    }
 
-		links.forEach((link) => {
-			link.addEventListener("click", (e) => {
-				const targetUrl =
-					link.getAttribute("href") || link.getAttribute("data-href");
-				if (targetUrl) {
-					e.preventDefault();
-					this.navigateTo(targetUrl);
-				}
-			});
-		});
-	}
+    if (classePokebola) {
+      this.superior.classList.add(classePokebola);
+      this.inferior.classList.add(classePokebola);
+      this.centro.classList.add(classePokebola);
+      this.botao.classList.add(classePokebola);
+    }
+  }
 
-	//animacao
-	animarTransicao() {
-		const shouldAnimate = sessionStorage.getItem("pageTransition");
+  // coloca os direcionamentos de link para os 'a' e 'button'
+  colocarLinkListener() {
+    const links = document.querySelectorAll(".page-link, .transition-link");
 
-		// confere se nao eh refresh
-		if (shouldAnimate === "true") {
-			sessionStorage.removeItem("pageTransition");
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const targetUrl =
+          link.getAttribute("href") || link.getAttribute("data-href");
+        if (targetUrl) {
+          e.preventDefault();
+          this.navigateTo(targetUrl);
+        }
+      });
+    });
+  }
 
-			this.transitionElement.classList.add("closing");
-			document.body.classList.add("transitioning");
+  //animacao
+  animarTransicao() {
+    const shouldAnimate = sessionStorage.getItem("pageTransition");
 
-			setTimeout(() => {
-				this.transitionElement.classList.remove("closing");
-				this.transitionElement.classList.add("opening");
+    // confere se nao eh refresh
+    if (shouldAnimate === "true") {
+      sessionStorage.removeItem("pageTransition");
 
-				setTimeout(() => {
-					document.body.classList.remove("transitioning");
-					this.transitionElement.classList.remove("opening");
-				}, 600);
-			}, 50);
-		}
-	}
+      this.transitionElement.classList.add("closing");
+      document.body.classList.add("transitioning");
 
-	// redireciona para o URL
-	navigateTo(url) {
-		if (document.body.classList.contains("transitioning")) {
-			return;
-		}
+      setTimeout(() => {
+        this.transitionElement.classList.remove("closing");
+        this.transitionElement.classList.add("opening");
 
-		sessionStorage.setItem("pageTransition", "true");
+        setTimeout(() => {
+          document.body.classList.remove("transitioning");
+          this.transitionElement.classList.remove("opening");
+        }, 600);
+      }, 50);
+    }
+  }
 
-		document.body.classList.add("transitioning");
-		this.transitionElement.classList.add("closing");
+  // redireciona para o URL
+  navigateTo(url) {
+    if (document.body.classList.contains("transitioning")) {
+      return;
+    }
 
-		setTimeout(() => {
-			window.location.href = url;
-		}, 1300);
-	}
+    sessionStorage.setItem("pageTransition", "true");
+
+    document.body.classList.add("transitioning");
+    this.transitionElement.classList.add("closing");
+
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1300);
+  }
 }
 
 if (document.readyState === "loading") {
-	document.addEventListener("DOMContentLoaded", () => {
-		window.pageTransition = new PageTransition();
-	});
+  document.addEventListener("DOMContentLoaded", () => {
+    window.pageTransition = new PageTransition();
+  });
 } else {
-	window.pageTransition = new PageTransition();
+  window.pageTransition = new PageTransition();
 }

@@ -1,1 +1,44 @@
-Aqui vai o texto de como utilizar nosso banco de dados XAMPP
+=====================================
+SETUP DO BANCO DE DADOS - MEMORY GAME
+=====================================
+
+INICIALIZAÇÃO DO BANCO
+----------------------
+1. Inicie Apache e MySQL no XAMPP Control Panel
+2. Acesse no navegador: http://localhost/memory-game/setup_database.php
+3. Aguarde a mensagem de conclusão
+
+ACESSO AO JOGO
+--------------
+URL: http://localhost/nome_da_pasta/
+ou:  http://localhost/nome_da_pasta/index.php
+
+
+USUÁRIOS DE TESTE (Senha: senha123)
+------------------------------------
+• ash_ketchum      - Ash Ketchum
+• misty_water      - Misty Waterflower  
+• brock_stone      - Brock Harrison
+• gary_oak         - Gary Oak (melhor jogador, mais partidas)
+• professor_oak    - Samuel Oak
+
+
+CONFIGURAÇÕES DO BANCO
+----------------------
+Host:     localhost
+Usuário:  root
+Senha:    (vazio)
+Banco:    memory_pokemon_game_db
+Tabelas:  users, game_results
+
+
+VERIFICAÇÃO (phpMyAdmin)
+-------------------------
+Acesse: http://localhost/phpmyadmin
+Banco: memory_pokemon_game_db
+• Tabela "users" → 5 usuários
+• Tabela "game_results" → 38 partidas de exemplo
+-----------------
+Execute setup_database.php apenas UMA vez
+Para resetar: delete o banco no phpMyAdmin e execute novamente
+=====================================

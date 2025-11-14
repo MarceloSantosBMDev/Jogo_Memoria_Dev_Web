@@ -55,7 +55,6 @@ if (empty($username) || empty($password) || empty($email) || empty($cpf_clean) |
 
 
 if (!empty($errors)) {
-    $response['message'] = 'Verifique os erros de validação.';
     $response['errors'] = $errors;
     sendResponse($response);
 }

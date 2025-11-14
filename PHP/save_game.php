@@ -1,7 +1,4 @@
 <?php
-// save_game.php - VERSÃO CORRIGIDA SEM SESSION_START DUPLICADO
-
-// Configurações de CORS
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
@@ -12,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// NÃO INICIAR SESSÃO AQUI - ELA JÁ DEVE VIR INICIADA
 // Apenas verificar se existe
 error_log("=== SAVE_GAME.PHP INICIADO ===");
 error_log("Session Status: " . session_status());
@@ -20,7 +16,6 @@ error_log("SESSION disponível: " . (isset($_SESSION) ? 'SIM' : 'NÃO'));
 error_log("SESSION data: " . (isset($_SESSION) ? print_r($_SESSION, true) : 'NÃO DEFINIDA'));
 
 try {
-    // **SOLUÇÃO: Usar parâmetro POST sempre**
     $json_input = file_get_contents('php://input');
     error_log("Dados brutos recebidos: " . $json_input);
     
@@ -36,11 +31,9 @@ try {
     
     error_log("Dados decodificados: " . print_r($data, true));
 
-    // OBTER USER_ID DOS DADOS POST - SEM DEPENDER DA SESSÃO
     $user_id = $data['user_id'] ?? null;
     
     if (!$user_id) {
-        // Tentar da sessão como fallback (se existir)
         if (isset($_SESSION) && isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
             error_log("User ID da sessão: " . $user_id);
